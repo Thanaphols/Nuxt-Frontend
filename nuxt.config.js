@@ -52,7 +52,7 @@ export default {
           // type: 'Bearer'
         },
         user: {
-          property: ''
+          property: '',
           // type: 'Bearer'
         },
         endpoints: {

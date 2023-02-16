@@ -1,23 +1,22 @@
 <!-- eslint-disable vue/valid-v-slot -->
 <template>
     
-    <v-row justify="center mt-1">
-      <v-col cols="12" sm="12" mt="2"  md="10" >
+    <v-row class="justify-center mt-1">
+      <v-col cols="12" sm="12" mt="2"  md="12" >
     <v-data-table :headers="headers" :items="data"  class="elevation-1 center" :search="search" :custom-filter="filterOnlyCapsText" >
    
       <template #top>
-
         <v-row  align="center">
             <v-col sm="8">
-                <v-text-field  v-model="search"  label="Search (UPPER CASE ONLY)" class="mx-5 " ></v-text-field>
+                <v-text-field  v-model="search"  label="Search Equipment name" class="mx-5 " ></v-text-field>
             </v-col>
             <v-col sm="2">
-                <div  color="primary" >  จำนวนสินค้าทั้งหมด {{ numall }} </div>
+                <div  color="primary" > Equipment number {{ numall }} </div>
             </v-col>
             <v-col sm="2">
             <router-link :to="`/dashboard/addequipment`" >
-                <v-btn    class=""   depressed  color="primary" >
-                <v-text  >  เพิ่มสินค้า </v-text>
+                <v-btn depressed  color="primary" >
+                 Add Eq
                 </v-btn>
             </router-link>
             </v-col>
@@ -32,6 +31,25 @@
        {{  item.i_category == ca.c_id ? ca.c_name : ''}}
     </div>
     </template>
+
+    <template #item.img="{ item }">
+        
+      <v-img
+      v-if=" item.i_img === null" 
+      height="100"
+      width="100"
+      cover
+      :src="require(`~/assets/images/noimg.png`)"
+    ></v-img>
+    <v-img
+      v-else
+      height="100"
+      width="100"
+      cover
+      :src="require(`~/assets/images/${item.i_img}`)"
+    ></v-img>
+        
+    </template>
      
       
       <template #item.actions="{ item }">
@@ -43,11 +61,11 @@
       </v-icon>
         </button>
     </router-link>
-        <button icon  class="mr-1"  @click="deInv(item.i_id)">
+        <v-btn icon color="error" class="mr-1"  @click="deInv(item.i_id)">
             <v-icon >
         mdi-delete
       </v-icon>
-        </button>
+        </v-btn>
       
     </template>
 
@@ -86,8 +104,7 @@
           { text: 'Equipment Name', value: 'i_name' },
           { text: 'Quatity', value: 'i_qty'  },
           { text: 'Category ', value: 'category'  },
-          { text: 'Status', value: 'i_stat'   },
-        //   { text: 'Image', value: 'i_img' },
+          { text: 'Image', value: 'img' },
           { text: 'Actions', value: 'actions', sortable: false },
           
         ]
@@ -105,7 +122,7 @@
         },
     methods: {
       filterOnlyCapsText (value, search, item) {
-        
+        console.log(value)
         return value != null &&
           search != null &&
           typeof value === 'string' &&
@@ -115,7 +132,7 @@
       async deInv(id) {
        
             try {
-            const res = await this.$axios.delete(`/inv/deInv/${id}`);
+            const res = await this.$axios.delete(`/admin/deInv/${id}`);
             this.de = res.data;
             // eslint-disable-next-line no-console
             console.log(this.de);

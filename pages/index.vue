@@ -5,18 +5,18 @@
     </div>
 
     <v-row class="mt-3">
-      <v-col>
-        <v-card >
-      <v-card-title>
-        จำนวนอุปกรณ์ทั้งหมด {{ n }}
-        <v-spacer/>
+      <v-col sm="3">
+        <v-card  >
+      <v-card-title >
+        <p>จำนวนอุปกรณ์ทั้งหมด </p>
+        <p class="green--text ml-2">{{ n }}</p>
       </v-card-title>
       
     </v-card>
       </v-col>
     </v-row>
     
-    <v-row class="mb-6 display-center" dense>
+    <v-row class="mb-6 " dense>
       
       <div v-for="item in data" :key="item.id">
       <v-expand-transition>

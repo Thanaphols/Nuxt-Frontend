@@ -5,8 +5,17 @@
     </div>
     <v-card v-for="(item, i) in data" :key="i" class="mx-auto my-12" max-width="500">
       <v-img
-      height="200" 
-      :src=" item.i_img"
+      v-if=" item.i_img === null" 
+      :aspect-ratio="1"
+      class="bg-grey-lighten-2"
+      cover
+      :src="require(`~/assets/images/noimg.png`)"
+    ></v-img>
+    <v-img
+      v-else
+      :aspect-ratio="1"
+      cover
+      :src="require(`~/assets/images/${item.i_img}`)"
     ></v-img>
         <v-card-title
           ><div class="mul">

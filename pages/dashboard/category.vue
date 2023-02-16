@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/valid-v-slot -->
 <template>
-    <v-row justify="center mt-1">
+    <v-row class="justify-center mt-1">
       <v-col cols="12" sm="12"  md="10" >
     <v-data-table :headers="headers" :items="data"  class="elevation-1 center" :search="search" :custom-filter="filterOnlyCapsText" >
    
@@ -27,7 +27,7 @@
       </template>
       
       <template #item.actions="{ item }">
-        <router-link :to="`/dashboard/${ item.c_id }`" >
+        <router-link :to="`/dashboard/upCate/${ item.c_id }`" >
         <button icon  class="mr-1"  >
             
             <v-icon small   >
@@ -112,7 +112,7 @@
       async deCate(id) {
         
             try {
-            const res = await this.$axios.delete(`/cate/deCate/${id}/`);
+            const res = await this.$axios.delete(`/admin/deCate/${id}/`);
             this.delete = res.data;
             // eslint-disable-next-line no-console
             console.log(this.delete);

@@ -9,7 +9,7 @@
     </v-alert> 
     <!-- Error Success -->
     <v-alert v-show="errorAlert"  dense outlined  type="error">
-        {{errorMessage.msg}}
+        {{errorMessage}}
     </v-alert> 
 
     <v-card-title class="text-center">Login</v-card-title>
@@ -50,7 +50,6 @@
 <script>
 
 export default {
-  el:'#login',
   name: 'Login',
   layout: 'default',
       data(){ 
@@ -88,13 +87,19 @@ export default {
         this.showAlert = true
         this.errorAlert = false
          this.loginMessage =  response.data;
-         this.$router.push('/')
+         
+         setTimeout(async () =>{  
+          await location.reload()
+          //  this.$router.push('/')
+         }, response)
+          
+         
        } catch (error) {
           // eslint-disable-next-line no-console
           console.log(error);
         this.showAlert = false
         this.errorAlert = true
-        this.errorMessage =  error.response.data;
+        this.errorMessage =  error.response.data.message;
 
       }
 

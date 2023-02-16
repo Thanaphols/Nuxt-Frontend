@@ -1,39 +1,95 @@
 <template>
   
   <v-app >
-    <v-row class="mt-0">
+    <v-row class="mt-0 ">
     <v-app-bar >
       <v-app-bar-nav-icon class="ml-2" @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <router-link to="/">
       <v-app-bar-title>
-        <router-link to="/">Equipments Manage System </router-link>
+        Equipments Manage System 
       </v-app-bar-title>
+    </router-link>
       <v-spacer/>
-      <button  v-if="user"  class="mr-2"  @click="logout()"><span class="material-icons"><svg-icon type="mdi" :path="path"></svg-icon></span> </button>
-
-      <router-link  v-if="!user" :to="`/auth/`"><span class="material-icons"><svg-icon type="mdi" :path="path2"></svg-icon></span> </router-link>
-      
+      <div >
+        <button  v-show="user" class="mr-2"  @click="logout()"><span class="material-icons"><svg-icon type="mdi" :path="path"></svg-icon></span> </button>
+        <!-- <router-link  v-show="!user" :to="`/auth/`"><span class="material-icons"><svg-icon type="mdi" :path="path2"></svg-icon></span> </router-link> -->
+      </div>
+      <v-switch
+        v-model="$vuetify.theme.dark"
+        inset
+        persistent-hint
+        class="mt-5"
+      ></v-switch>
     </v-app-bar>
   </v-row>
 
     <v-navigation-drawer v-model="drawer" absolute  bottom temporary >
-      <v-list-item title="Regis"  href="/auth/regis/" >Regis</v-list-item>
-      <v-list-item v-if="!user"    title="Login"   href="/auth/"><svg-icon type="mdi" :path="path2"></svg-icon></v-list-item>
-      <v-list-item title="Profile"  href="/auth/profile/" >Profile</v-list-item>
-      <v-list-item title="Borrow"  href="/borrow/" >borrow</v-list-item>
-      <v-list-item title="MeBorrow"  href="/borrow/meborrow" >BorrowMe</v-list-item>
-      <v-list-item title="ReturnMe"  href="/borrow/meReturn" >ReturnMe</v-list-item>
+      <router-link  v-show="!user" :to="`/auth/Regis/`">
+      <v-list-item title="Regis"   >
+        <span >Regis</span> 
+      </v-list-item>
+    </router-link>
+      <router-link  v-show="!user" :to="`/auth/`">
+      <v-list-item  v-show="!user"    title="Login" >
+          <svg-icon type="mdi" class="mb-0" :path="path2"> </svg-icon> <span class="ml-2">Login</span>
+      </v-list-item>
+    </router-link>
+    <router-link  v-show="user" :to="`/auth/profile/`">
+      <v-list-item title="Profile" >Profile</v-list-item>
+    </router-link>
+    <router-link   v-show="user" :to="`/borrow/`">
+      <v-list-item title="Borrow"  href="/borrow/" >Borrow</v-list-item>
+    </router-link>
+
+    <router-link   v-show="user" :to="`/borrow/meWait`">
+      <v-list-item title="meWait" >MeWait</v-list-item>
+    </router-link>
+     
+      <router-link   v-show="user" :to="`/borrow/meborrow`">
+        <v-list-item title="MeBorrow"  >MeBorrow</v-list-item>
+      </router-link>
+
+      <router-link   v-show="user" :to="`/borrow/meReturn`">
+        <v-list-item title="MeReturn"  >ReturnMe</v-list-item>
+      </router-link>
+      
+      
+      
       <!-- <v-list-item title="equipment"  href="/inv/equipment" >Equipment</v-list-item> -->
-      <v-list-item title="AdminDashboard"  href="/dashboard/" >AdminDashboard</v-list-item>
-      <v-list-item title="AdminUser"  href="/dashboard/user" >AdminUser</v-list-item>
-      <v-list-item title="AdminEquipment"  href="/dashboard/equipment" >AdminEquipment</v-list-item>
-      <v-list-item title="AdminBorrow"  href="/dashboard/borrow" >AdminBorrow</v-list-item>
-      <v-list-item title="AdminReturn"  href="/dashboard/return" >AdminReturn</v-list-item>
-      <v-list-item title="AdminCategory"  href="/dashboard/category" >AdminCategory</v-list-item>
+      <div v-if="$auth.loggedIn" >
+        <div  v-if="user.u_stat === 'Admin'" >
+          <router-link   v-show="user" :to="`/dashboard/`"> 
+            <v-list-item  title="AdminDashboard">AdminDashboard</v-list-item>
+          </router-link>
+          <router-link   v-show="user" :to="`/dashboard/user`">
+            <v-list-item  title="AdminUser">AdminUser</v-list-item>
+          </router-link>
+          <router-link   v-show="user" :to="`/dashboard/equipment`"> 
+            <v-list-item  title="AdminEquipment">AdminEquipment</v-list-item>
+          </router-link>
+          <router-link   v-show="user" :to="`/dashboard/borrow`"> 
+            <v-list-item  title="AdminBorrow">AdminBorrow</v-list-item>
+          </router-link>
+          <router-link   v-show="user" :to="`/dashboard/return`"> 
+            <v-list-item  title="AdminReturn">AdminReturn</v-list-item>
+          </router-link>
+          <router-link   v-show="user" :to="`/dashboard/category`"> 
+             <v-list-item  title="AdminCategory">AdminCategory</v-list-item>
+          </router-link>
+          <router-link   v-show="user" :to="`/dashboard/appBorrow`"> 
+             <v-list-item  title="AdminCategory">AdminAppBorrow</v-list-item>
+          </router-link>
+      </div>
+    </div>
       <!-- <v-list-item title="Regis"  href="/regis/" >logout</v-list-item> -->
     </v-navigation-drawer>
     
-    <v-main>
-      <nuxt/>
+    <v-main >
+      <v-container >
+        
+        <nuxt/>
+      </v-container>
+      
     </v-main>
   </v-app>
 </template>
@@ -48,7 +104,14 @@ export default {
     SvgIcon
   },
   data: () => ({
-    user: [],
+    user: {
+      u_id: '',
+      email: '',
+      username: '',
+      firstname: '',
+      lastname: '',
+      u_stat: '',
+    },
     path: mdiLogoutVariant,
     path2: mdiAccount,
       drawer: false,
@@ -80,6 +143,6 @@ export default {
 }
 a {
   text-decoration: none;
-  color: black;
+  color: white;
 }
 </style>

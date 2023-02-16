@@ -1,5 +1,5 @@
  <template>
-  <v-row justify="center mt-1">
+  <v-row class="justify-center mt-1">
     <v-col
       cols="12"
       sm="10"
@@ -9,23 +9,21 @@
 
     <!-- Alert Success -->
     <v-alert v-show="showAlert"  dense outlined   type="success">
-        {{loginMessage.message}}
+        {{loginMessage}}
     </v-alert> 
     <!-- Error Success -->
     <v-alert v-show="errorAlert"  dense outlined  type="error">
-        {{errorMessage.message}}
+        {{errorMessage}}
     </v-alert>
 
     <form  @submit.prevent="addBorrow()" >
       <v-card >
-        <v-row>
-          <v-col sm="4"></v-col>
-          <v-col sm="4">
-          <v-card-title  >
-          <h2 class="text-center">ยืมอุปกรณ์</h2>
+        <v-row >
+          <v-col sm="12">
+          <v-card-title class="text-center"  >
+          <h2  >Select Equipment to Borrow</h2>
         </v-card-title>
         </v-col>
-        <v-col sm="4"></v-col>
         </v-row>
         
         <v-card-text>
@@ -33,15 +31,16 @@
            
 
           <!--autocomplete -->
+       <v-col sm="6">
+        <v-autocomplete
+        v-model="category" :items="cate" item-value="c_id"  item-text="c_name"   dense  filled label="Category"
+        @change="getEqu(category)" ></v-autocomplete>
+       </v-col>
+
        <v-col sm="6" >
         <v-autocomplete
         v-model="equment" :items="eq" item-value="i_id"  item-text="i_name"   dense  filled label="Equipment"
         @change="handleChange" ></v-autocomplete>
-       </v-col>
-
-
-       <v-col sm="6">
-        <v-autocomplete  v-model="category" :items="cate" item-value="c_id"  item-text="c_name"   dense  filled label="Category"></v-autocomplete>
        </v-col>
 
        <v-col cols="12" sm="6" >
@@ -86,15 +85,15 @@ export default {
     loginMessage:'',
     equment:'',
     category: 0,
-      user:[],
-      qty:'',
-      i_qty:'',
-       eq: [],
-       cate:[],
+    user:[],
+    qty:'',
+    i_qty:'',
+    eq: [],
+    cate:[],
   }
 },
 mounted() {
-          this.getEqu()
+          // this.getEqu()
           this.getCate()
           // console.log(this.showAlert)
           // console.log(this.errorAlert)
@@ -135,23 +134,24 @@ methods : {
         this.showAlert = true
         // eslint-disable-next-line no-console
         console.log(response);
-         this.loginMessage =  response.data;
+         this.loginMessage =  response.data.message;
       })
       .catch((error)=> {
         // eslint-disable-next-line no-console
         console.error(error);
         this.showAlert = false
         this.errorAlert = true
-        this.errorMessage =  error.response.data;
+        this.errorMessage =  error.response.data.message;
        
       })
      
     },
 
 
-  async getEqu() {
+  async getEqu(id) {
     try {
-      const res = await this.$axios.get(`/inv`);
+      console.log(111)
+      const res = await this.$axios.get(`/inv/cate/${id}`);
       this.eq = res.data;
       // eslint-disable-next-line no-console
       console.log(this.eq);
@@ -161,12 +161,13 @@ methods : {
 
     }
   },
+
   async getCate() {
     try {
       const res = await this.$axios.get(`/cate`);
       this.cate = res.data;
       // eslint-disable-next-line no-console
-      console.log(this.cate);
+      // console.log(this.cate);
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e);
@@ -174,10 +175,8 @@ methods : {
     }
   },
   resetForm(){
-              this.user.email="";
-              this.user.firstname="";
-              this.user.lastname="";
-              this.user.password="";
+              this.i_qty="";
+              this.qty="";
     },
   }
 }

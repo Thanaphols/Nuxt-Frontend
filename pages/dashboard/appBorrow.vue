@@ -1,7 +1,5 @@
 <!-- eslint-disable vue/valid-v-slot -->
-
 <template>
-    
     <v-row class="justify-center mt-1">
       <v-col cols="12" sm="12"  md="10" >
     <v-data-table :headers="headers" :items="data"  class="elevation-1 center" :search="search" :custom-filter="filterOnlyCapsText" >
@@ -15,13 +13,15 @@
       </template>
       
       <template #item.actions="{ item }">
-       
-        </button>
-        <button icon  class="mr-1"  @click="deBorrow(item.b_id,item.b_qty,item.i_id)">
-            <v-icon >
-        mdi-delete
-      </v-icon>
-        </button>
+        <div class="form-inline">
+        <v-btn color="primary" class="mr-4"   @click="upWait(item.b_id,item.b_qty,item.i_id)">
+            Approve
+        </v-btn> <br>
+        
+        <v-btn color="error"    @click="deWait(item.b_id)">
+            Delete
+        </v-btn>
+    </div>
     </template>
 
     
@@ -38,7 +38,7 @@
 //   import SvgIcon from '@jamescoyle/vue-icon';
   import { mdiKeyboardReturn } from '@mdi/js';
    export default {
-    name: "MyCoolComponent",
+    name: "AppBorrow",
     components: {
 		// SvgIcon
 	},
@@ -49,7 +49,9 @@
         path: mdiKeyboardReturn,
         u_id: '',
         data:[],
-        user:[],
+        up:[],
+        delete:[],
+        re:[],
         search: '',
         b_id: '',
        
@@ -69,7 +71,6 @@
           { text: 'Inventory (id)', value: 'i_id'  },
           { text: 'Borrow Date', value: 'b_date'   },
           { text: 'Status', value: 'b_stat' },
-          { text: 'Return Date', value: 'b_return'   },
           { text: 'Quetity', value: 'b_qty', sortable: false },
           { text: 'Actions', value: 'actions', sortable: false },
           
@@ -77,16 +78,7 @@
       },
     },
     mounted() {
-          
-          // console.log(this.showAlert)
-          // console.log(this.errorAlert)
-          // eslint-disable-next-line no-console
-          // console.log(this.desserts)
-          this.user = this.$auth.user
-           this. u_id = this.user.u_id
-           // eslint-disable-next-line no-console
-          console.log(this.u_id)
-          this.getmeReturn()
+          this.getWait()
         },
     methods: {
       filterOnlyCapsText (value, search, item) {
@@ -96,14 +88,29 @@
           value.toString().toLocaleUpperCase().includes(search)
       },
 
-      async deBorrow(id,qty,id2) {
+      async upWait(id,qty,id2) {
+        
+        try {
+        const res = await this.$axios.patch(`/admin/upWait/${id}/${qty}/${id2}`);
+        this.up = res.data;
+        // eslint-disable-next-line no-console
+        // console.log(this.up);
+        this.$router.go('/dashboard/appBorrow/')
+        } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+
+        }
+    },
+
+      async deWait(id) {
         
             try {
-            const res = await this.$axios.delete(`/borrow/deBorrow/${id}/${qty}/${id2}`);
-            this.data = res.data;
+            const res = await this.$axios.delete(`/admin/deWait/${id}`);
+            this.delete = res.data;
             // eslint-disable-next-line no-console
-            console.log(this.data);
-            this.$router.push('/borrow/meBorrow/')
+            // console.log(this.delete);
+            this.$router.go('/dashboard/appBorrow/')
             } catch (e) {
             // eslint-disable-next-line no-console
             console.error(e);
@@ -111,41 +118,9 @@
             }
         },
 
-        async upBorrow(id,qty,id2) {
-        
-        try {
-        const res = await this.$axios.delete(`/borrow/deBorrow/${id}/${qty}/${id2}`);
-        this.data = res.data;
-        // eslint-disable-next-line no-console
-        console.log(this.data);
-        this.$router.push('/borrow/meBorrow/')
-        } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
-
-        }
-    },
-
-    async reBorrow(id,qty,id2) {
-        
-        try {
-        const res = await this.$axios.patch(`/borrow/return/${id}/${qty}/${id2}`);
-        this.data = res.data;
-        // eslint-disable-next-line no-console
-        console.log(this.data);
-        this.$router.push('/borrow/meBorrow/')
-        } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
-
-        }
-    },
-    
-        
-
-      async getmeReturn() {
+      async getWait() {
             try {
-            const res = await this.$axios.get(`/return/`);
+            const res = await this.$axios.get(`/wait`);
             this.data = res.data;
             // eslint-disable-next-line no-console
             console.log(this.data);

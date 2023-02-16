@@ -22,7 +22,7 @@
             <v-col sm="4"></v-col>
             <v-col sm="6">
             <v-card-title  >
-            <h2 class="text-center">แก้ไขอุปกรณ์</h2>
+            <h2 class="text-center">Edit Equipment</h2>
           </v-card-title>
           </v-col>
           </v-row>

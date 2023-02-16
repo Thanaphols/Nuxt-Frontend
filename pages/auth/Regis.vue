@@ -3,12 +3,12 @@
   <v-card class="mx-auto my-12"  max-width="500">
     <!-- Alert Success -->
     <v-alert v-show="showAlert"  dense outlined   type="success">
-        {{regisMessage.message}}
+        {{regisMessage}}
         
     </v-alert> 
     <!-- Error Success -->
     <v-alert  v-show="errorMessage"  dense outlined  type="error">
-        {{errorMessage.message}}
+        {{errorMessage}}
     </v-alert> 
 
     <v-card-title class="text-center">Register</v-card-title>
@@ -62,7 +62,6 @@
 export default {
   name: 'ReGis',
     // eslint-disable-next-line vue/order-in-components
-    el:'#app',
       data(){ 
         return {
           showAlert: false,
@@ -102,14 +101,14 @@ export default {
         this.showAlert = true
         // eslint-disable-next-line no-console
         console.log(response);
-        this.regisMessage =  response.data;
+        this.regisMessage =  response.data.message;
       })
       .catch((error)=> {
         // eslint-disable-next-line no-console
         console.error(error);
         this.showAlert = false
         this.errorAlert = true
-        this.errorMessage =  error.response.data;
+        this.errorMessage =  error.response.data.message;
        
       })
      

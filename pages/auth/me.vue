@@ -55,7 +55,6 @@
   export default {
     name: 'ReGis',
       // eslint-disable-next-line vue/order-in-components
-      el:'#app',
         data(){ 
           return {
             showAlert: false,

@@ -36,7 +36,6 @@
             <v-text-field   v-model="eq.i_name"   type="text" label="Equipment Name" outlined  ></v-text-field>
          </v-col>
          <v-col sm="9" >
-         
             <v-autocomplete  v-model="category" :items="cate"  item-value="c_id"  item-text="c_name"   dense  filled label="Category"></v-autocomplete>
          </v-col>
          <v-col sm="3" >

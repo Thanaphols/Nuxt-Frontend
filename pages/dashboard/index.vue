@@ -8,7 +8,7 @@
         <v-col sm="4">
           <v-card >
         <v-card-title>
-          จำนวนอุปกรณ์ทั้งหมด {{ n }}
+          Number of Equipment {{ n }}
           <v-spacer/>
         </v-card-title>
         
@@ -17,7 +17,7 @@
         <v-col sm="4">
           <v-card >
         <v-card-title>
-          รายการอุปกรณ์ทั้งหมดที่กำลังถูกยืม {{ n2 }}
+          Number of borrowed items {{ n2 }}
           <v-spacer/>
         </v-card-title>
         
@@ -26,7 +26,7 @@
         <v-col sm="4">
           <v-card >
         <v-card-title>
-          รายการอุปกรณ์ทั้งหมดที่ถูกคืนแล้ว {{ n3 }}
+          number of returned items {{ n3 }}
           <v-spacer/>
         </v-card-title>
         
@@ -62,12 +62,12 @@
         };
     },
     created() {
-    this.getProduct();
+    this.getEq();
     this.getBorrow();
     this.getReturn();
     },
     methods: {
-    async getProduct() {
+    async getEq() {
       try {
         const res = await this.$axios.get(`/inv`);
         this.data = res.data;

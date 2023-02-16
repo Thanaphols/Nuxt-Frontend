@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/valid-v-slot -->
 <template>
     <v-row justify="center mt-1">
-      <v-col cols="12" sm="12"  md="10" >
+      <v-col cols="12" sm="10"  md="11" >
     <v-data-table :headers="headers" :items="data"  class="elevation-1 center" :search="search" :custom-filter="filterOnlyCapsText" >
    
       <template #top>
@@ -11,18 +11,32 @@
           class="mx-4 "
         ></v-text-field>
       </template>
+
+    <template #item.img="{ item }">
+        
+        <v-img
+        v-if=" item.i_img === null" 
+        height="100"
+        width="100"
+        cover
+        :src="require(`~/assets/images/noimg.png`)"
+      ></v-img>
+      <v-img
+        v-else
+        height="100"
+        width="100"
+        cover
+        :src="require(`~/assets/images/${item.i_img}`)"
+      ></v-img>
+          
+      </template>
       
       <template #item.actions="{ item }">
-        <button icon  class="mr-1"  @click="upBorrow(item.b_id,item.b_qty,item.i_id)">
-            <v-icon small   >
-        mdi-pencil
-      </v-icon>
-        </button>
-        <button icon  class="mr-1"  @click="deBorrow(item.b_id,item.b_qty,item.i_id)">
+        <v-btn color="error" icon  class="mr-1"  @click="deBorrow(item.b_id,item.b_qty,item.i_id)">
             <v-icon >
         mdi-delete
       </v-icon>
-        </button>
+        </v-btn>
     </template>
 
     <template #item.Return="{ item }">
@@ -61,6 +75,7 @@
         re:[],
         search: '',
         b_id: '',
+        eq:[],
        
       }
     },
@@ -74,11 +89,13 @@
               if (!this.b_id) return true
               return value < parseInt(this.b_id)
             }, },
-          { text: 'User (id)', value: 'u_id' },
-          { text: 'Inventory (id)', value: 'i_id'  },
-          { text: 'Borrow Date', value: 'b_date'   },
-          { text: 'Status', value: 'b_stat' },
+          { text: 'UserName', value: 'username' },
+          { text: 'Inventory Name', value: 'i_name'  },
+          { text: 'Equipment Images', value: 'img'   },
+          { text: 'Category', value: 'c_name' },
           { text: 'Quetity', value: 'b_qty', sortable: false },
+          { text: 'Borrow Date', value: 'b_date', sortable: false },
+          { text: 'Borrow Status', value: 'b_stat', sortable: false },
           { text: 'Actions', value: 'actions', sortable: false },
           { text: 'Return', value: 'Return', sortable: false },
           
@@ -87,15 +104,9 @@
     },
     mounted() {
           
-          // console.log(this.showAlert)
-          // console.log(this.errorAlert)
-          // eslint-disable-next-line no-console
-          // console.log(this.desserts)
           this.user = this.$auth.user
            this. u_id = this.user.u_id
-           // eslint-disable-next-line no-console
-          console.log(this.u_id)
-          this.getmeBorrow()
+           this.getmeBorrow()
         },
     methods: {
       filterOnlyCapsText (value, search, item) {
@@ -106,42 +117,20 @@
       },
 
       async deBorrow(id,qty,id2) {
-        
             try {
             const res = await this.$axios.delete(`/borrow/deBorrow/${id}/${qty}/${id2}`);
             this.delete = res.data;
-            // eslint-disable-next-line no-console
-            console.log(this.delete);
             this.$router.push('/borrow/meBorrow/')
             } catch (e) {
             // eslint-disable-next-line no-console
             console.error(e);
-
             }
         },
 
-        async upBorrow(id,qty,id2) {
-        
-        try {
-        const res = await this.$axios.delete(`/borrow/deBorrow/${id}/${qty}/${id2}`);
-        this.up = res.data;
-        // eslint-disable-next-line no-console
-        console.log(this.up);
-        this.$router.push('/borrow/meBorrow/')
-        } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
-
-        }
-    },
-
     async reBorrow(id,qty,id2) {
-        
         try {
         const res = await this.$axios.patch(`/borrow/return/${id}/${qty}/${id2}`);
         this.re = res.data;
-        // eslint-disable-next-line no-console
-        console.log(this.re);
         this.$router.push('/borrow/meBorrow/')
         } catch (e) {
         // eslint-disable-next-line no-console
@@ -149,8 +138,6 @@
 
         }
     },
-    
-        
 
       async getmeBorrow() {
             try {

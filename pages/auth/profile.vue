@@ -7,33 +7,33 @@
           
       </v-alert> 
       <!-- Error Success -->
-      <v-alert v-for="(item, i) in errorMessage.data"  v-show="errorAlert" :key="i" dense outlined  type="error">
-          {{item}}
+      <v-alert v-show="errorAlert" dense outlined  type="error">
+          {{errorMessage}}
       </v-alert> 
   
       <v-card-title class="text-center">Profile</v-card-title>
       
       <v-card-text>
   
-        <form  @submit.prevent="addUser()" >
-  
-          <v-text-field  v-model="user.email"  type="email" :counter="50" label="Email" 
+        <form  @submit.prevent="upUser()" >
+          
+          <v-text-field  v-model="data.email"  type="email" :counter="50" label="Email" 
             > </v-text-field>
-            <v-text-field  v-model="user.username"  :counter="50" label="Username" 
+
+            <v-text-field  v-model="data.username"  :counter="50" label="Username" 
+            > </v-text-field>
+            <v-text-field  v-model="data.firstname"  :counter="50" label="Firstname" 
             > </v-text-field>
   
-            <v-text-field  v-model="user.lastname"  :counter="50" label="Lastname" > 
+            <v-text-field  v-model="data.lastname"  :counter="50" label="Lastname" > 
             </v-text-field>
   
-            <v-text-field  v-model="user.password" type="password"  :counter="8"  label="Password" 
+            <v-text-field  v-model="data.password" type="password"  :counter="8"  label="Password" 
             > </v-text-field>
             <v-card-actions  >
               
         <v-btn  type="submit"  >
             submit
-        </v-btn>
-        <v-btn @click="resetForm()">
-            clear
         </v-btn>
       </v-card-actions>
           </form>
@@ -52,10 +52,9 @@
   
   <script>
   export default {
-    name: 'ReGis',
+    name: 'Profile',
     middleware: 'auth',
       // eslint-disable-next-line vue/order-in-components
-      el:'#app',
         data(){ 
           return {
             showAlert: false,
@@ -63,25 +62,28 @@
             errorMessage:'',
             regisMessage:'',
             user: [],
+            data:{
+              u_id: '',
+              email: '',
+              username: '',
+              firstname: '',
+              lastname: '',
+              password: '',
+            },
                 }
           },
           mounted() {
            this.user = this.$auth.user
-            // console.log(this.showAlert)
-            // console.log(this.errorAlert)
-          },
-          updated() {
-            // console.log(this.showAlert)
-            // this.ShowAlert
+           this.getuser()
           },
           methods: {
-      async addUser() {
+      async upUser() {
           await this.$axios.patch(`users/upUser/${this.user.u_id}`,{
-          email: this.user.email,
-          username: this.user.username,
-          lastname: this.user.lastname,
-          password: this.user.password,
-          
+          email: this.data.email,
+          username: this.data.username,
+          firstname: this.data.firstname,
+          lastname: this.data.lastname,
+          password: this.data.password,
         })
         .then((response) => {
           this.errorAlert = false
@@ -95,16 +97,27 @@
           console.error(error);
           this.showAlert = false
           this.errorAlert = true
-          this.errorMessage =  error.response;
+          this.errorMessage =  error.response.data.message;
          
         })
        
       },
-       resetForm(){
-                this.user.email="";
-                this.user.username="";
-                this.user.lastname="";
-                this.user.password="";
+      async getuser(){
+        const id = this.user.u_id;
+        try {
+          const res = await this.$axios.get(`/user/${id}`)
+          res.data.forEach(val => {
+            this.data.email = val.email
+              this.data.username= val.username
+              this.data.firstname= val.firstname
+              this.data.lastname= val.lastname
+              this.data.password= val.password
+          });
+          console.log(this.data)
+
+        } catch (error) {
+          
+        }
       }
                   }
   }

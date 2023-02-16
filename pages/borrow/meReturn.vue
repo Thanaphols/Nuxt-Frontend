@@ -1,46 +1,65 @@
 <!-- eslint-disable vue/valid-v-slot -->
 
 <template>
+  <v-row justify="center mt-1">
+    <v-col cols="12" sm="12"  md="12" >
+  <v-data-table :headers="headers" :items="data"  class="elevation-1 center" :search="search" :custom-filter="filterOnlyCapsText" >
+ 
+    <template #top>
+      <v-text-field
+        v-model="search"
+        label="Search (UPPER CASE ONLY)"
+        class="mx-4 "
+      ></v-text-field>
+    </template>
     
-    <v-row justify="center mt-1">
-      <v-col cols="12" sm="12"  md="10" >
-    <v-data-table :headers="headers" :items="data"  class="elevation-1 center" :search="search" :custom-filter="filterOnlyCapsText" >
-   
-      <template #top>
-        <v-text-field
-          v-model="search"
-          label="Search (UPPER CASE ONLY)"
-          class="mx-4 "
-        ></v-text-field>
-      </template>
+  <template #item.img="{ item }">
       
-      <!-- <template #item.actions="{ item }">
-        <button icon  class="mr-1"  @click="upBorrow(item.b_id,item.b_qty,item.i_id)">
-            <v-icon small   >
-        mdi-pencil
-      </v-icon>
-        </button>
-        <button icon  class="mr-1"  @click="deBorrow(item.b_id,item.b_qty,item.i_id)">
-            <v-icon >
-        mdi-delete
-      </v-icon>
-        </button>
-    </template> -->
-
-
-      
-    </v-data-table>
-    </v-col>
-    </v-row>
+      <v-img
+      v-if=" item.i_img === null" 
+      height="100"
+      width="100"
+      cover
+      :src="require(`~/assets/images/noimg.png`)"
+    ></v-img>
+    <v-img
+      v-else
+      height="100"
+      width="100"
+      cover
+      :src="require(`~/assets/images/${item.i_img}`)"
+    ></v-img>
+        
+    </template>
     
+    <template #item.actions="{ item }">
+      <v-btn color="error" icon  class="mr-1"  @click="deBorrow(item.b_id,item.b_qty,item.i_id)">
+          <v-icon >
+      mdi-delete
+    </v-icon>
+      </v-btn>
   </template>
+
+  <template #item.Return="{ item }">
+      <button icon  class="mr-1"  @click="reBorrow(item.b_id,item.b_qty,item.i_id)">
+        <svg-icon type="mdi" :path="path"></svg-icon>
+      </button>
+     
+  </template>
+
+    
+  </v-data-table>
+  </v-col>
+  </v-row>
+  
+</template>
    
   
   <script>
   // import SvgIcon from '@jamescoyle/vue-icon';
   import { mdiKeyboardReturn } from '@mdi/js';
    export default {
-    name: "MyCoolComponent",
+    name: "MeReturn",
     components: {
 		// SvgIcon
 	},
@@ -54,7 +73,7 @@
         user:[],
         search: '',
         b_id: '',
-       
+       eq:[]
       }
     },
     
@@ -62,16 +81,19 @@
         
       headers () {
         return [
-          
-          { text: 'Borrow (id)', value: 'b_id', filter: value => {
+        { text: 'Borrow (id)', value: 'b_id', filter: value => {
               if (!this.b_id) return true
               return value < parseInt(this.b_id)
             }, },
-          { text: 'User (id)', value: 'u_id' },
-          { text: 'Inventory (id)', value: 'i_id'  },
-          { text: 'Borrow Date', value: 'b_date'   },
-          { text: 'Status', value: 'b_stat' },
+          { text: 'UserName', value: 'username' },
+          { text: 'Inventory Name', value: 'i_name'  },
+          { text: 'Images', value: 'img'   },
+          { text: 'Category', value: 'c_name' },
           { text: 'Quetity', value: 'b_qty', sortable: false },
+          { text: 'Borrow Date', value: 'b_date', sortable: false },
+          { text: 'Borrow Return', value: 'b_return', sortable: false },
+          { text: 'Borrow Status', value: 'b_stat', sortable: false },
+          { text: 'Actions', value: 'actions', sortable: false },
           // { text: 'Actions', value: 'actions', sortable: false },
           
         ]
@@ -98,7 +120,6 @@
       },
 
       async deBorrow(id,qty,id2) {
-        
             try {
             const res = await this.$axios.delete(`/borrow/deBorrow/${id}/${qty}/${id2}`);
             this.data = res.data;
@@ -108,12 +129,10 @@
             } catch (e) {
             // eslint-disable-next-line no-console
             console.error(e);
-
             }
         },
 
         async upBorrow(id,qty,id2) {
-        
         try {
         const res = await this.$axios.delete(`/borrow/deBorrow/${id}/${qty}/${id2}`);
         this.data = res.data;
@@ -123,12 +142,10 @@
         } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-
         }
     },
 
     async reBorrow(id,qty,id2) {
-        
         try {
         const res = await this.$axios.patch(`/borrow/return/${id}/${qty}/${id2}`);
         this.data = res.data;
@@ -141,9 +158,6 @@
 
         }
     },
-    
-        
-
       async getmeBorrow() {
             try {
             const res = await this.$axios.get(`/borrow/return/${this.u_id}`);

@@ -7,16 +7,29 @@
 <!-- eslint-disable vue/prop-name-casing -->
 <template>
     <v-card
-      class="mx-auto my-12"
-      width="350"
+      
+      class="mx-auto "
+      width="355"
     >
     <v-img
-      height="200" 
-      :src=" i_img"
+      v-if=" i_img === null" 
+      :aspect-ratio="1"
+      height="250"
+      cover
+      :src="require(`~/assets/images/noimg.png`)"
     ></v-img>
+    <v-img
+      v-else
+      :aspect-ratio="1"
+      height="250"
+      cover
+      :src="require(`~/assets/images/${i_img}`)"
+    ></v-img>
+   
+    
   
       <v-card-title class="el"><div class="mul">
-          ชื่ออุปกรณ์ : {{ i_name }}
+          EqName : {{ i_name }}
           </div></v-card-title>
   
       <v-card-text>
@@ -26,9 +39,9 @@
         >
   
         <div class="my-4 text-subtitle-1">
-          <p>ชนิดอุปกรณ์ : {{ i_category }}</p>
-          <p> จำนวนอุปกรณ์ :  {{i_qty}}</p>
-          <p> สถานะอุปกรณ์ :  {{i_stat}}</p>
+          <p>Catagory : {{ i_category }}</p>
+          <p> Emaining :  {{i_qty}}</p>
+          <p> Status :  {{i_stat}}</p>
         </div>
         </v-row>
   
@@ -39,8 +52,8 @@
   
       <v-card-actions>
         <router-link :to="`/inv/invdetail/${i_id}`" >
-            <v-btn color="deep-purple lighten-2" text  >
-            รายละเอียด
+            <v-btn color="teal  lighten-2" text  >
+              Details
             </v-btn>
         </router-link>
       </v-card-actions>
@@ -61,7 +74,7 @@ export default {
         },
         // eslint-disable-next-line vue/require-default-prop, vue/prop-name-casing
       i_category:{
-            type: String,
+            type: Number,
         },
         // eslint-disable-next-line vue/require-default-prop, vue/prop-name-casing
       i_stat:{
@@ -69,13 +82,16 @@ export default {
         },
         // eslint-disable-next-line vue/require-default-prop, vue/prop-name-casing
       i_qty:{
-            type: String,
+            type: Number,
         },
         // eslint-disable-next-line vue/require-default-prop, vue/prop-name-casing
       i_img:{
             type: String,
         },
       
+    },
+    mounted(){
+      // console.log(this.i_img)
     }
     
   }

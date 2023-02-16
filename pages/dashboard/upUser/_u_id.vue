@@ -107,7 +107,7 @@
             }
             },
       async upUser() {
-          await this.$axios.patch(`users/adupUser/${this.user.u_id}`,{
+          await this.$axios.patch(`/admin/adupUser/${this.user.u_id}`,{
           email: this.user.email,
           username: this.user.username,
           firstname: this.user.firstname,

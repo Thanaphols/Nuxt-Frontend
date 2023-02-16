@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/valid-v-slot -->
 <template>
     
-    <v-row justify="center mt-1">
+    <v-row class="justify-center mt-1">
       <v-col cols="12" sm="12"  md="10" >
     <v-data-table :headers="headers" :items="data"  class="elevation-1 center" :search="search" :custom-filter="filterOnlyCapsText" >
    
@@ -14,8 +14,8 @@
             <v-col sm="4">
             <router-link :to="`/dashboard/addEquipment`" >
                 <v-btn disabled    class=""  depressed  color="primary" >
-                <v-text  >จำนวนผู้ใช้งานทั้งหมด </v-text>
-                <v-text  > {{numall}}</v-text>
+                <p  >จำนวนผู้ใช้งานทั้งหมด </p>
+                <p > {{numall}}</p>
                 </v-btn>
             </router-link>
             </v-col>
@@ -26,18 +26,18 @@
       
       <template #item.actions="{ item }">
         <router-link :to="`/dashboard/upUser/${ item.u_id }`" >
-        <button icon  class="mr-1"  >
+        <v-btn icon  class="mr-1"  >
             
             <v-icon small   >
         mdi-pencil
       </v-icon>
-        </button>
+        </v-btn>
     </router-link>
-        <button icon  class="mr-1"  @click="deInv(item.u_id)">
+        <v-btn icon  class="mr-1"  @click="deInv(item.u_id)">
             <v-icon >
         mdi-delete
       </v-icon>
-        </button>
+        </v-btn>
       
     </template>
 
