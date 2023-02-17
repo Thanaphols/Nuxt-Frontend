@@ -13,9 +13,9 @@
             </v-col>
             <v-col sm="4">
             <router-link :to="`/dashboard/addEquipment`" >
-                <v-btn disabled    class=""  depressed  color="primary" >
-                <p  >จำนวนผู้ใช้งานทั้งหมด </p>
-                <p > {{numall}}</p>
+                <v-btn     class=""    text  color="primary" >
+                Number of User 
+                {{numall}}
                 </v-btn>
             </router-link>
             </v-col>
@@ -26,14 +26,13 @@
       
       <template #item.actions="{ item }">
         <router-link :to="`/dashboard/upUser/${ item.u_id }`" >
-        <v-btn icon  class="mr-1"  >
-            
+        <v-btn icon  outlined  class="mr-1 primary">
             <v-icon small   >
         mdi-pencil
       </v-icon>
         </v-btn>
     </router-link>
-        <v-btn icon  class="mr-1"  @click="deInv(item.u_id)">
+        <v-btn   icon  outlined  class="mr-1 error" @click="deInv(item.u_id)">
             <v-icon >
         mdi-delete
       </v-icon>
@@ -54,6 +53,7 @@
     middleware: 'auth',
     data () {
       return {
+        dialog: false,
         u_id: '',
         data:[],
         delete:[],
@@ -109,7 +109,10 @@
             this.delete = res.data;
             // eslint-disable-next-line no-console
             console.log(this.delete);
-            this.$router.push('/borrow/meBorrow/')
+            setTimeout(async () =>{  
+          await location.reload()
+          //  this.$router.push('/')
+         }, )
             
             } catch (e) {
             // eslint-disable-next-line no-console

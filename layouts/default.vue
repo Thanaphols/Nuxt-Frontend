@@ -1,17 +1,18 @@
 <template>
   
-  <v-app >
-    <v-row class="mt-0 ">
-    <v-app-bar >
+  <v-app  >
+    <v-app-bar app color="primary"  dark >
       <v-app-bar-nav-icon class="ml-2" @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <router-link to="/">
-      <v-app-bar-title>
-        Equipments Manage System 
+      
+      <v-app-bar-title >
+        <router-link  style="text-decoration: none; color: inherit;"  to="/">Equipments Manage System 
+      </router-link>
+        
       </v-app-bar-title>
-    </router-link>
+    
       <v-spacer/>
       <div >
-        <button  v-show="user" class="mr-2"  @click="logout()"><span class="material-icons"><svg-icon type="mdi" :path="path"></svg-icon></span> </button>
+        <v-btn  v-show="user" class="mr-2"  @click="logout()"><span class="material-icons"><svg-icon type="mdi" :path="path"></svg-icon></span> </v-btn>
         <!-- <router-link  v-show="!user" :to="`/auth/`"><span class="material-icons"><svg-icon type="mdi" :path="path2"></svg-icon></span> </router-link> -->
       </div>
       <v-switch
@@ -21,19 +22,19 @@
         class="mt-5"
       ></v-switch>
     </v-app-bar>
-  </v-row>
-
-    <v-navigation-drawer v-model="drawer" absolute  bottom temporary >
-      <router-link  v-show="!user" :to="`/auth/Regis/`">
-      <v-list-item title="Regis"   >
-        <span >Regis</span> 
-      </v-list-item>
-    </router-link>
+ 
+    <v-navigation-drawer v-model="drawer"   app  bottom temporary  >
       <router-link  v-show="!user" :to="`/auth/`">
       <v-list-item  v-show="!user"    title="Login" >
           <svg-icon type="mdi" class="mb-0" :path="path2"> </svg-icon> <span class="ml-2">Login</span>
       </v-list-item>
     </router-link>
+      <router-link  v-show="!user" :to="`/auth/Regis/`">
+      <v-list-item title="Regis"   >
+        <span >Regis</span> 
+      </v-list-item>
+    </router-link>
+      
     <router-link  v-show="user" :to="`/auth/profile/`">
       <v-list-item title="Profile" >Profile</v-list-item>
     </router-link>
@@ -84,13 +85,11 @@
       <!-- <v-list-item title="Regis"  href="/regis/" >logout</v-list-item> -->
     </v-navigation-drawer>
     
-    <v-main >
-      <v-container >
+    <v-content  >
         
         <nuxt/>
-      </v-container>
       
-    </v-main>
+    </v-content>
   </v-app>
 </template>
 

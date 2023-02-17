@@ -1,5 +1,5 @@
 <template>
-
+  
   <v-card class="mx-auto my-12"  max-width="500">
     <!-- Alert Success -->
     <v-alert v-show="showAlert"  dense outlined   type="success">
@@ -11,7 +11,7 @@
         {{errorMessage}}
     </v-alert> 
 
-    <v-card-title class="text-center">Register</v-card-title>
+    <v-card-title class="justify-center light-blue darken-2">Register</v-card-title>
     
     <v-card-text>
 

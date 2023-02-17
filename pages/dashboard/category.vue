@@ -28,18 +28,18 @@
       
       <template #item.actions="{ item }">
         <router-link :to="`/dashboard/upCate/${ item.c_id }`" >
-        <button icon  class="mr-1"  >
+        <v-btn icon  outlined  class="mr-1 teal primary"  >
             
             <v-icon small   >
         mdi-pencil
       </v-icon>
-        </button>
+        </v-btn>
     </router-link>
-        <button icon  class="mr-1"  @click="deCate(item.c_id)">
+        <v-btn icon  outlined  class="mr-1 teal error"  @click="deCate(item.c_id)">
             <v-icon >
         mdi-delete
       </v-icon>
-        </button>
+        </v-btn>
     </template>
 
    
@@ -115,8 +115,11 @@
             const res = await this.$axios.delete(`/admin/deCate/${id}/`);
             this.delete = res.data;
             // eslint-disable-next-line no-console
-            console.log(this.delete);
-            this.$router.go('/dashboard/borrow/')
+           
+            setTimeout(async () =>{  
+          await location.reload()
+          //  this.$router.push('/')
+         }, )
             } catch (e) {
             // eslint-disable-next-line no-console
             console.error(e);

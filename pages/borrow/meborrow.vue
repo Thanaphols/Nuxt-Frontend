@@ -31,8 +31,8 @@
           
       </template>
       
-      <template #item.actions="{ item }">
-        <v-btn color="error" icon  class="mr-1"  @click="deBorrow(item.b_id,item.b_qty,item.i_id)">
+      <!-- <template #item.actions="{ item }">
+        <v-btn icon  outlined  class="error"   @click="deBorrow(item.b_id,item.b_qty,item.i_id)">
             <v-icon >
         mdi-delete
       </v-icon>
@@ -40,11 +40,11 @@
     </template>
 
     <template #item.Return="{ item }">
-        <button icon  class="mr-1"  @click="reBorrow(item.b_id,item.b_qty,item.i_id)">
+        <v-btn icon  outlined  class="teal lighten-1"   @click="reBorrow(item.b_id,item.b_qty,item.i_id)">
           <svg-icon type="mdi" :path="path"></svg-icon>
-        </button>
+        </v-btn>
        
-    </template>
+    </template> -->
 
       
     </v-data-table>
@@ -55,18 +55,18 @@
    
   
   <script>
-  import SvgIcon from '@jamescoyle/vue-icon';
-  import { mdiKeyboardReturn } from '@mdi/js';
+  // import SvgIcon from '@jamescoyle/vue-icon';
+  // import { mdiKeyboardReturn } from '@mdi/js';
    export default {
     name: "MeBorrow",
     components: {
-		SvgIcon
+		// SvgIcon
 	},
     
     middleware: 'auth',
     data () {
       return {
-        path: mdiKeyboardReturn,
+        // path: mdiKeyboardReturn,
         u_id: '',
         data:[],
         up:[],
@@ -96,8 +96,8 @@
           { text: 'Quetity', value: 'b_qty', sortable: false },
           { text: 'Borrow Date', value: 'b_date', sortable: false },
           { text: 'Borrow Status', value: 'b_stat', sortable: false },
-          { text: 'Actions', value: 'actions', sortable: false },
-          { text: 'Return', value: 'Return', sortable: false },
+          // { text: 'Actions', value: 'actions', sortable: false },
+          // { text: 'Return', value: 'Return', sortable: false },
           
         ]
       },

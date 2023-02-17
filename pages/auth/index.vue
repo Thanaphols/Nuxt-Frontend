@@ -1,9 +1,6 @@
 <template>
-    
   <v-card  class="mx-auto   my-12"  max-width="500">
     <!-- Alert Success -->
-    
-    
     <v-alert v-show="showAlert"  dense outlined   type="success">
         {{loginMessage.message}}
     </v-alert> 

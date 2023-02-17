@@ -33,19 +33,13 @@
     </template>
     
     <template #item.actions="{ item }">
-      <v-btn color="error" icon  class="mr-1"  @click="deBorrow(item.b_id,item.b_qty,item.i_id)">
+      <v-btn icon  outlined  class="mr-1 teal error"   @click="deBorrow(item.b_id,item.b_qty,item.i_id)">
           <v-icon >
       mdi-delete
     </v-icon>
       </v-btn>
   </template>
 
-  <template #item.Return="{ item }">
-      <button icon  class="mr-1"  @click="reBorrow(item.b_id,item.b_qty,item.i_id)">
-        <svg-icon type="mdi" :path="path"></svg-icon>
-      </button>
-     
-  </template>
 
     
   </v-data-table>
@@ -94,7 +88,6 @@
           { text: 'Borrow Return', value: 'b_return', sortable: false },
           { text: 'Borrow Status', value: 'b_stat', sortable: false },
           { text: 'Actions', value: 'actions', sortable: false },
-          // { text: 'Actions', value: 'actions', sortable: false },
           
         ]
       },

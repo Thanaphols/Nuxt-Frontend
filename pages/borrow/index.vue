@@ -177,6 +177,8 @@ methods : {
   resetForm(){
               this.i_qty="";
               this.qty="";
+              this.category="";
+              this.equment="";
     },
   }
 }

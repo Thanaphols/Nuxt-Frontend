@@ -13,15 +13,33 @@
           class="mx-4 "
         ></v-text-field>
       </template>
+
+      <template #item.img="{ item }">
+      
+      <v-img
+      v-if=" item.i_img === null" 
+      height="100"
+      width="100"
+      cover
+      :src="require(`~/assets/images/noimg.png`)"
+    ></v-img>
+    <v-img
+      v-else
+      height="100"
+      width="100"
+      cover
+      :src="require(`~/assets/images/${item.i_img}`)"
+    ></v-img>
+        
+    </template>
       
       <template #item.actions="{ item }">
        
-        </button>
-        <button icon  class="mr-1"  @click="deBorrow(item.b_id,item.b_qty,item.i_id)">
+        <v-btn icon  outlined  class="mr-1 teal error"  @click="deBorrow(item.b_id,item.b_qty,item.i_id)">
             <v-icon >
         mdi-delete
       </v-icon>
-        </button>
+        </v-btn>
     </template>
 
     
@@ -49,6 +67,7 @@
         path: mdiKeyboardReturn,
         u_id: '',
         data:[],
+        de:[],
         user:[],
         search: '',
         b_id: '',
@@ -61,16 +80,17 @@
       headers () {
         return [
           
-          { text: 'Borrow (id)', value: 'b_id', filter: value => {
+        { text: 'Borrow (id)', value: 'b_id', filter: value => {
               if (!this.b_id) return true
               return value < parseInt(this.b_id)
             }, },
-          { text: 'User (id)', value: 'u_id' },
-          { text: 'Inventory (id)', value: 'i_id'  },
-          { text: 'Borrow Date', value: 'b_date'   },
-          { text: 'Status', value: 'b_stat' },
-          { text: 'Return Date', value: 'b_return'   },
+          { text: 'UserName', value: 'username' },
+          { text: 'Inventory Name', value: 'i_name'  },
+          { text: 'Equipment Images', value: 'img'   },
+          { text: 'Category', value: 'c_name' },
           { text: 'Quetity', value: 'b_qty', sortable: false },
+          { text: 'Borrow Date', value: 'b_date', sortable: false },
+          { text: 'Borrow Status', value: 'b_stat', sortable: false },
           { text: 'Actions', value: 'actions', sortable: false },
           
         ]
@@ -99,11 +119,13 @@
       async deBorrow(id,qty,id2) {
         
             try {
-            const res = await this.$axios.delete(`/borrow/deBorrow/${id}/${qty}/${id2}`);
-            this.data = res.data;
+           const res = await this.$axios.delete(`/borrow/deBorrow/${id}/${qty}/${id2}`);
+           this.de = res.data
             // eslint-disable-next-line no-console
-            console.log(this.data);
-            this.$router.push('/borrow/meBorrow/')
+            setTimeout(async () =>{  
+          await location.reload()
+          //  this.$router.push('/')
+         },)
             } catch (e) {
             // eslint-disable-next-line no-console
             console.error(e);
@@ -114,11 +136,9 @@
         async upBorrow(id,qty,id2) {
         
         try {
-        const res = await this.$axios.delete(`/borrow/deBorrow/${id}/${qty}/${id2}`);
-        this.data = res.data;
+        await this.$axios.delete(`/borrow/deBorrow/${id}/${qty}/${id2}`);
         // eslint-disable-next-line no-console
-        console.log(this.data);
-        this.$router.push('/borrow/meBorrow/')
+        this.$router.go()
         } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
@@ -126,20 +146,7 @@
         }
     },
 
-    async reBorrow(id,qty,id2) {
-        
-        try {
-        const res = await this.$axios.patch(`/borrow/return/${id}/${qty}/${id2}`);
-        this.data = res.data;
-        // eslint-disable-next-line no-console
-        console.log(this.data);
-        this.$router.push('/borrow/meBorrow/')
-        } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
-
-        }
-    },
+    
     
         
 

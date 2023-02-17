@@ -19,7 +19,7 @@
     ></v-img>
         <v-card-title
           ><div class="mul">
-          ชื่ออุปกรณ์ : {{ item.i_name }}
+          Equipment Name : {{ item.i_name }}
           </div>
         </v-card-title>
 
@@ -31,8 +31,12 @@
         </p>
 
         <div class="my-4 text-subtitle-1">
-         <p> ชนิดอุปกรณ์ : {{ item.i_category }}</p>
-         <p> สถานะอุปกรณ์ : {{ item.i_stat }} </p>
+          <div v-for=" ca in cate " :key="ca.c_id" >
+            <div v-if=" item.i_category === ca.c_id">
+              <p>Catagory : {{ ca.c_name }}</p>
+            </div>
+          </div>
+          <p>Quetity : {{ item.i_qty }}</p>
         </div>
           
         </v-row>
@@ -41,6 +45,13 @@
         <div>
         </div>
       </v-card-text>
+      <v-card-actions>
+      <router-link  :to="`/`">
+        <v-btn color="primary"  depressed  >
+              ย้อนกลับ
+            </v-btn>
+    </router-link>
+  </v-card-actions>
     </v-card>
   </v-container>
 </template>
@@ -53,13 +64,16 @@ export default {
     return {
       data: [],
       load: true,
+      cate:[],
     };
   },
   async created() {
     await this.getData();
     // console.log(this.data);
   },
-  mounted() {},
+  mounted() {
+    this.getcate();
+  },
   methods: {
     async getData() {
       try {
@@ -75,6 +89,18 @@ export default {
         console.error(e);
       }
     },
+    async getcate(){
+        try {
+            const res = await this.$axios.get(`/cate/`);
+            this.cate = res.data;
+            // eslint-disable-next-line no-console
+            console.log(this.cate);
+            } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error(e);
+
+            }
+      }
   },
 };
 </script>

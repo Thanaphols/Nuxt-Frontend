@@ -3,7 +3,7 @@
 <template>
     
     <v-row justify="center mt-1">
-      <v-col cols="12" sm="12"  md="10" >
+      <v-col cols="12" sm="12"  md="12" >
     <v-data-table :headers="headers" :items="data"  class="elevation-1 center" :search="search" :custom-filter="filterOnlyCapsText" >
    
       <template #top>
@@ -34,19 +34,21 @@
     </template>
     
     <template #item.actions="{ item }">
-      <v-btn color="error" icon  class="mr-1"  @click="deBorrow(item.b_id,item.b_qty,item.i_id)">
+      <router-link :to="`/borrow/upWait/${ item.b_id }`" >
+        <v-btn icon  outlined  class="mr-1 primary"   >
+            <v-icon small   >
+        mdi-pencil
+      </v-icon>
+        </v-btn>
+    </router-link>
+      <v-btn icon  outlined  class="mr-1 error"    @click="deBorrow(item.b_id,item.b_qty,item.i_id)">
           <v-icon >
       mdi-delete
     </v-icon>
       </v-btn>
   </template>
 
-  <template #item.Return="{ item }">
-      <button icon  class="mr-1"  @click="reBorrow(item.b_id,item.b_qty,item.i_id)">
-        <svg-icon type="mdi" :path="path"></svg-icon>
-      </button>
-     
-  </template>
+ 
 
 
       

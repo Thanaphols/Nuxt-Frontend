@@ -4,12 +4,11 @@
       <v-progress-circular indeterminate></v-progress-circular>
     </div>
 
-    <v-row class="mt-3">
-      <v-col sm="3">
-        <v-card  >
+    <v-row >
+      <v-col sm="4">
+        <v-card class=" green darken-1  alight-center " >
       <v-card-title >
-        <p>จำนวนอุปกรณ์ทั้งหมด </p>
-        <p class="green--text ml-2">{{ n }}</p>
+        Total number of Equipment {{ n }} 
       </v-card-title>
       
     </v-card>

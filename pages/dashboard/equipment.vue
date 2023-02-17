@@ -21,7 +21,6 @@
             </router-link>
             </v-col>
         </v-row>
-        {{ search }}
       </template>
 
       <template #item.category="{ item }">
@@ -53,15 +52,14 @@
      
       
       <template #item.actions="{ item }">
-        <router-link :to="`/dashboard/upEq/${ item.i_id }`" >
-        <button icon  class="mr-1"  >
-            
-            <v-icon small   >
+        <router-link :to="`/dashboard/${ item.i_id }`" >
+        <v-btn icon  outlined  class="mr-1 primary">
+            <v-icon>
         mdi-pencil
       </v-icon>
-        </button>
+        </v-btn>
     </router-link>
-        <v-btn icon color="error" class="mr-1"  @click="deInv(item.i_id)">
+        <v-btn icon  outlined  class="mr-1 primary error"  @click="deInv(item.i_id)">
             <v-icon >
         mdi-delete
       </v-icon>
@@ -87,7 +85,10 @@
         search: '',
         i_id: '',
        numall:'',
-       cate:[],
+       cate:{
+        c_id: '',
+        c_name: '',
+       },
        de:[],
       }
     },
@@ -136,7 +137,10 @@
             this.de = res.data;
             // eslint-disable-next-line no-console
             console.log(this.de);
-            this.$router.go('/dashboard/equipment/')
+            setTimeout(async () =>{  
+          await location.reload()
+          //  this.$router.push('/')
+         }, )
             
             } catch (e) {
             // eslint-disable-next-line no-console
