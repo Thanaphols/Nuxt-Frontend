@@ -1,6 +1,6 @@
 <template>
   
-  <v-card class="mx-auto my-12"  max-width="500">
+  <v-card class="mx-auto my-12" elevation="11" outlined  max-width="500">
     <!-- Alert Success -->
     <v-alert v-show="showAlert"  dense outlined   type="success">
         {{regisMessage}}
@@ -11,29 +11,29 @@
         {{errorMessage}}
     </v-alert> 
 
-    <v-card-title class="justify-center light-blue darken-2">Register</v-card-title>
+    <v-card-title class="justify-center light-blue darken-2 mb-5" >Register</v-card-title>
     
     <v-card-text>
 
       <form  @submit.prevent="addUser()" >
 
-        <v-text-field  v-model="user.email"  type="email" :counter="50" label="Email" 
+        <v-text-field  v-model="user.email"  type="email" :counter="50"  label="Email"   outlined
           > </v-text-field>
-          <v-text-field  v-model="user.username"  :counter="50" label="Username" 
+          <v-text-field  v-model="user.username"  :counter="50" label="Username"  outlined
           > </v-text-field>
           
           <v-row>
             <v-col cols="12" sm="6" >
-              <v-text-field  v-model="user.firstname"  :counter="50" label="firstname" > 
+              <v-text-field  v-model="user.firstname"  :counter="50" label="firstname"  outlined > 
           </v-text-field>
             </v-col>
             <v-col cols="12" sm="6" >
-            <v-text-field  v-model="user.lastname"  :counter="50" label="Lastname" > 
+            <v-text-field  v-model="user.lastname"  :counter="50" label="Lastname"  outlined> 
           </v-text-field>
             </v-col>
           </v-row>
 
-          <v-text-field  v-model="user.password" type="password"  :counter="8"  label="Password" 
+          <v-text-field  v-model="user.password" type="password" max=8  :counter="8"   label="Password"  outlined
           > </v-text-field>
           <v-card-actions  >
             
@@ -75,6 +75,7 @@ export default {
                     lastname:"",
                     password:"",
                   },
+         
               }
         },
         mounted() {

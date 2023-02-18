@@ -1,35 +1,30 @@
 <template>
-  <v-container>
-    <div v-show="load" class="display-center">
-      <v-progress-circular indeterminate></v-progress-circular>
-    </div>
-    <v-card v-for="(item, i) in data" :key="i" class="mx-auto my-12" max-width="500">
+   <v-layout row warp >
+    <v-flex lg3 md3 sm3></v-flex>
+    <v-flex lg6 md6 sm6>
+    <v-card v-for="(item, i) in data" :key="i" v-card class="ma-3 rounded-lg " warp light elevation="11" outlined width="100%"  >
+      <div class="black">
       <v-img
       v-if=" item.i_img === null" 
       :aspect-ratio="1"
       class="bg-grey-lighten-2"
-      cover
+      circle
       :src="require(`~/assets/images/noimg.png`)"
     ></v-img>
     <v-img
       v-else
       :aspect-ratio="1"
-      cover
+      circle
       :src="require(`~/assets/images/${item.i_img}`)"
     ></v-img>
+  </div>
         <v-card-title
           ><div class="mul">
           Equipment Name : {{ item.i_name }}
           </div>
         </v-card-title>
-
-
       <v-card-text>
         <v-row align="center" class="mx-0">
-          <p >
-         
-        </p>
-
         <div class="my-4 text-subtitle-1">
           <div v-for=" ca in cate " :key="ca.c_id" >
             <div v-if=" item.i_category === ca.c_id">
@@ -38,10 +33,7 @@
           </div>
           <p>Quetity : {{ item.i_qty }}</p>
         </div>
-          
         </v-row>
-
-
         <div>
         </div>
       </v-card-text>
@@ -53,7 +45,10 @@
     </router-link>
   </v-card-actions>
     </v-card>
-  </v-container>
+  </v-flex>
+  <v-flex lg3 md3 sm3></v-flex>
+  </v-layout>
+  
 </template>
 
 <script>
@@ -63,7 +58,6 @@ export default {
   data() {
     return {
       data: [],
-      load: true,
       cate:[],
     };
   },
@@ -83,7 +77,6 @@ export default {
         this.data = resp.data;
         // eslint-disable-next-line no-console
         console.log('DATA : ',this.data);
-        this.load = false;
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
@@ -94,7 +87,7 @@ export default {
             const res = await this.$axios.get(`/cate/`);
             this.cate = res.data;
             // eslint-disable-next-line no-console
-            console.log(this.cate);
+           // console.log(this.cate);
             } catch (e) {
             // eslint-disable-next-line no-console
             console.error(e);

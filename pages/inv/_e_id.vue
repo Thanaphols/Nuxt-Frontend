@@ -17,7 +17,7 @@
       </v-alert>
   
       <form  @submit.prevent="upEquipment()" >
-        <v-card >
+        <v-card  >
           <v-row align="center">
             <v-col sm="4"></v-col>
             <v-col sm="6">

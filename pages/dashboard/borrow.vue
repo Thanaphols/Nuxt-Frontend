@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/valid-v-slot -->
 <template>
     <v-row class="justify-center mt-1">
-      <v-col cols="12" sm="12"  md="10" >
+      <v-col cols="12" sm="12"  md="12"  >
     <v-data-table :headers="headers" :items="data"  class="elevation-1 center" :search="search" :custom-filter="filterOnlyCapsText" >
    
       <template #top>
@@ -18,14 +18,14 @@
       v-if=" item.i_img === null" 
       height="100"
       width="100"
-      cover
+       circle
       :src="require(`~/assets/images/noimg.png`)"
     ></v-img>
     <v-img
       v-else
       height="100"
       width="100"
-      cover
+       circle
       :src="require(`~/assets/images/${item.i_img}`)"
     ></v-img>
         
@@ -178,3 +178,5 @@
     },
   }
   </script>
+
+  <style></style>

@@ -1,5 +1,5 @@
 <template>
-  <v-card  class="mx-auto   my-12"  max-width="500">
+  <v-card  class="mx-auto   my-12" elevation="11" outlined  max-width="500">
     <!-- Alert Success -->
     <v-alert v-show="showAlert"  dense outlined   type="success">
         {{loginMessage.message}}

@@ -113,7 +113,7 @@
               this.data.lastname= val.lastname
               this.data.password= val.password
           });
-          console.log(this.data)
+          // console.log(this.data)
 
         } catch (error) {
           

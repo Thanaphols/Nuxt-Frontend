@@ -30,21 +30,22 @@
     ></v-img>
         
     </template>
+
+    <template #item.b_dates="{ item }">
+        <v-btn  icon  outlined  class=" primary"  >
+          {{ item.b_date }}
+        </v-btn> 
+    </template>
       
       <template #item.actions="{ item }">
-
-       
-        
         <v-btn  icon  outlined  class=" primary"   @click="upWait(item.b_id,item.b_qty,item.i_id)">
           <svg-icon type="mdi" :path="path2"></svg-icon>
         </v-btn> 
-        
         <v-btn  icon  outlined  class="mr-1 teal error"    @click="deWait(item.b_id)">
           <v-icon >
         mdi-delete
           </v-icon>
         </v-btn>
-    
     </template>
 
     
@@ -96,7 +97,7 @@
           { text: 'Equipment Images', value: 'img'   },
           { text: 'Category', value: 'c_name' },
           { text: 'Quetity', value: 'b_qty', sortable: false },
-          { text: 'Borrow Date', value: 'b_date', sortable: false },
+          { text: 'Borrow Date', value: 'b_dates', sortable: false },
           { text: 'Borrow Status', value: 'b_stat', sortable: false },
           { text: 'Actions', value: 'actions', sortable: false },
           

@@ -1,8 +1,9 @@
 <!-- eslint-disable vue/valid-v-slot -->
 <template>
-    <v-row justify="center mt-1">
-      <v-col cols="12" sm="10"  md="11" >
-    <v-data-table :headers="headers" :items="data"  class="elevation-1 center" :search="search" :custom-filter="filterOnlyCapsText" >
+    <v-row class="justtify-center mt-1" >
+      <v-col cols="12" sm="12"  md="12" >
+    <v-data-table :headers="headers" :items="data"  class="elevation-1 center" :search="search" :custom-filter="filterOnlyCapsText"
+    elevation="11" outlined >
    
       <template #top>
         <v-text-field

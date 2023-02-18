@@ -9,11 +9,16 @@
 
     <!-- Alert Success -->
     <v-alert v-show="showAlert"  dense outlined   type="success">
-        {{loginMessage}}
+        {{loginMessage}} 
     </v-alert> 
     <!-- Error Success -->
     <v-alert v-show="errorAlert"  dense outlined  type="error">
+      <v-row align="center">
         {{errorMessage}}
+        <v-spacer/>
+        <v-btn text plain @click="errorAlert = !errorAlert">X</v-btn>
+      </v-row>
+        
     </v-alert>
 
     <form  @submit.prevent="addBorrow()" >

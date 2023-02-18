@@ -2,8 +2,8 @@
 <template>
     
     <v-row class="justify-center mt-1">
-      <v-col cols="12" sm="12"  md="10" >
-    <v-data-table :headers="headers" :items="data"  class="elevation-1 center" :search="search" :custom-filter="filterOnlyCapsText" >
+      <v-col cols="12" sm="12"  md="12"  >
+    <v-data-table :headers="headers" :items="data"  class="elevation-1 center" :search="search" cols="12" sm="12"  md="12" :custom-filter="filterOnlyCapsText" >
    
       <template #top>
 
@@ -13,8 +13,8 @@
             </v-col>
             <v-col sm="4">
             <router-link :to="`/dashboard/addEquipment`" >
-                <v-btn     class=""    text  color="primary" >
-                Number of User 
+                <v-btn  plain text  color="primary" >
+                จำนวนผู้ใช้งานทั้งหมด 
                 {{numall}}
                 </v-btn>
             </router-link>
@@ -70,17 +70,17 @@
       headers () {
         return [
           
-          { text: 'User (id)', value: 'u_id', filter: value => {
+          { text: 'ไอดีผู้ใช้งาน', value: 'u_id', filter: value => {
               if (!this.i_id) return true
               return value < parseInt(this.i_id)
             }, },
-            { text: 'Email', value: 'email' },
+            { text: 'อีเมล', value: 'email' },
           { text: 'Username', value: 'username' },
-          { text: 'Firstname', value: 'firstname'  },
-          { text: 'Lastname ', value: 'lastname'  },
-          { text: 'User Status', value: 'u_stat'   },
+          { text: 'ชื่อ', value: 'firstname'  },
+          { text: 'นามสกุล ', value: 'lastname'  },
+          { text: 'สถานะ', value: 'u_stat'   },
           
-          { text: 'Actions', value: 'actions', sortable: false },
+          { text: 'จัดการ', value: 'actions', sortable: false },
           
         ]
       },

@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/valid-v-slot -->
 <template>
     <v-row class="justify-center mt-1">
-      <v-col cols="12" sm="12"  md="10" >
+      <v-col cols="12" sm="12"  md="12"  >
     <v-data-table :headers="headers" :items="data"  class="elevation-1 center" :search="search" :custom-filter="filterOnlyCapsText" >
    
       <template #top>
