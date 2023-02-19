@@ -1,12 +1,20 @@
 <template>
   <v-card  class="mx-auto   my-12" elevation="11" outlined  max-width="500">
     <!-- Alert Success -->
-    <v-alert v-show="showAlert"  dense outlined   type="success">
+    <v-alert v-show="showAlert"  dense outlined  type="success">
+      <v-row align="center">
         {{loginMessage.message}}
-    </v-alert> 
+        <v-spacer/>
+        <v-btn text plain @click="showAlert = !showAlert">X</v-btn>
+      </v-row>
+    </v-alert>
     <!-- Error Success -->
     <v-alert v-show="errorAlert"  dense outlined  type="error">
+      <v-row align="center">
         {{errorMessage}}
+        <v-spacer/>
+        <v-btn text plain @click="errorAlert = !errorAlert">X</v-btn>
+      </v-row>
     </v-alert> 
 
     <v-card-title class="justify-center" sm12 xs12>เข้าสู่ระบบ</v-card-title>

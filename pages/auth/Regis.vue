@@ -2,13 +2,20 @@
   
   <v-card class="mx-auto my-12" elevation="11" light outlined  max-width="500">
     <!-- Alert Success -->
-    <v-alert v-show="showAlert"  dense outlined   type="success">
+    <v-alert v-show="showAlert"  dense outlined  type="success">
+      <v-row align="center">
         {{regisMessage}}
-        
-    </v-alert> 
+        <v-spacer/>
+        <v-btn text plain @click="showAlert = !showAlert">X</v-btn>
+      </v-row>
+    </v-alert>
     <!-- Error Success -->
-    <v-alert  v-show="errorMessage"  dense outlined  type="error">
+    <v-alert v-show="errorAlert"  dense outlined  type="error">
+      <v-row align="center">
         {{errorMessage}}
+        <v-spacer/>
+        <v-btn text plain @click="errorAlert = !errorAlert">X</v-btn>
+      </v-row>
     </v-alert> 
 
     <v-card-title class="justify-center  " sm12 xs12 >
@@ -105,6 +112,7 @@ export default {
         // eslint-disable-next-line no-console
         console.log(response);
         this.regisMessage =  response.data.message;
+        this.$router.push('/')
       })
       .catch((error)=> {
         // eslint-disable-next-line no-console

@@ -4,23 +4,25 @@
     <v-row class="justify-center mt-1">
       <v-col cols="12" sm="12"  md="12" >
     <v-data-table :headers="headers" :items="data"  class="elevation-1 center" :search="search" :custom-filter="filterOnlyCapsText" >
-   
+      
       <template #top>
-        <v-row  align="center">
-            <v-col sm="8">
-                <v-text-field  v-model="search"  label="Search Equipment name" class="mx-5 " ></v-text-field>
-            </v-col>
-            <v-col sm="2">
-                <div  color="primary" > Equipment number {{ numall }} </div>
-            </v-col>
-            <v-col sm="2">
-            <router-link :to="`/dashboard/addequipment`" >
+        <v-layout row  align="center">
+          <v-flex  col4 md6 sm12 xs12>
+                <v-text-field  v-model="search"  label="Search (UPPER CASE ONLY)" class="mx-5 " ></v-text-field>
+            </v-flex>
+            <v-flex col4 md6 sm12 xs12>
+                <v-btn  plain text   >
+                จำนวนผู้ใช้งานทั้งหมด 
+                {{numall}}
+                </v-btn>
+                
+                <router-link :to="`/dashboard/addequipment`" >
                 <v-btn depressed  color="primary" >
-                 Add Eq
+                 เพิ่มอุปกรณ์
                 </v-btn>
             </router-link>
-            </v-col>
-        </v-row>
+            </v-flex>
+        </v-layout>
       </template>
 
       <template #item.category="{ item }">
@@ -98,15 +100,15 @@
       headers () {
         return [
           
-          { text: 'Equipment (id)', value: 'i_id', filter: value => {
+          { text: 'ไอดีอุปกรณ์', value: 'i_id', filter: value => {
               if (!this.i_id) return true
               return value < parseInt(this.i_id)
             }, },
-          { text: 'Equipment Name', value: 'i_name' },
-          { text: 'Quatity', value: 'i_qty'  },
-          { text: 'Category ', value: 'category'  },
-          { text: 'Image', value: 'img' },
-          { text: 'Actions', value: 'actions', sortable: false },
+          { text: 'ชื่ออุปกรณ์', value: 'i_name' },
+          { text: 'จำนวน', value: 'i_qty'  },
+          { text: 'หมวดหมู่', value: 'category'  },
+          { text: 'รูปภาพ', value: 'img' },
+          { text: 'จัดการ', value: 'actions', sortable: false },
           
         ]
       },

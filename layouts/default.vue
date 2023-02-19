@@ -75,23 +75,24 @@
             <v-list-item  title="AdminDashboard"><svg-icon class="mr-1" type="mdi" :path="dashboard"></svg-icon> Dashboard</v-list-item>
           </router-link>
           <router-link   v-show="user" :to="`/dashboard/user`">
-            <v-list-item  title="AdminUser"><svg-icon class="mr-1" type="mdi" :path="dashboard"></svg-icon> ข้อมูลผู้ใช้งาน</v-list-item>
+            <v-list-item  title="AdminUser"><svg-icon class="mr-1" type="mdi" :path="manageUser"></svg-icon> ข้อมูลผู้ใช้งาน</v-list-item>
           </router-link>
           <router-link   v-show="user" :to="`/dashboard/equipment`"> 
-            <v-list-item  title="AdminEquipment"><svg-icon class="mr-1" type="mdi" :path="dashboard"></svg-icon> ข้อมูลอุปกรณ์</v-list-item>
-          </router-link>
-          <router-link   v-show="user" :to="`/dashboard/borrow`"> 
-            <v-list-item  title="AdminBorrow"><svg-icon class="mr-1" type="mdi" :path="dashboard"></svg-icon> ข้อมูลการยืม</v-list-item>
-          </router-link>
-          <router-link   v-show="user" :to="`/dashboard/return`"> 
-            <v-list-item  title="AdminReturn"><svg-icon class="mr-1" type="mdi" :path="dashboard"></svg-icon> ข้อมูลการคืน</v-list-item>
-          </router-link>
-          <router-link   v-show="user" :to="`/dashboard/category`"> 
-             <v-list-item  title="AdminCategory"><svg-icon class="mr-1" type="mdi" :path="dashboard"></svg-icon> ข้อมูลหมวดหมู่</v-list-item>
+            <v-list-item  title="AdminEquipment"><svg-icon class="mr-1" type="mdi" :path="manageEq"></svg-icon> ข้อมูลอุปกรณ์</v-list-item>
           </router-link>
           <router-link   v-show="user" :to="`/dashboard/appBorrow`"> 
-             <v-list-item  title="AdminCategory"><svg-icon class="mr-1" type="mdi" :path="dashboard"></svg-icon>ข้อมูลคำร้องขอยืม</v-list-item>
+             <v-list-item  title="AdminCategory"><svg-icon class="mr-1" type="mdi" :path="manageWa"></svg-icon>ข้อมูลคำร้องขอยืม</v-list-item>
           </router-link>
+          <router-link   v-show="user" :to="`/dashboard/borrow`"> 
+            <v-list-item  title="AdminBorrow"><svg-icon class="mr-1" type="mdi" :path="manageBr"></svg-icon> ข้อมูลการยืม</v-list-item>
+          </router-link>
+          <router-link   v-show="user" :to="`/dashboard/return`"> 
+            <v-list-item  title="AdminReturn"><svg-icon class="mr-1" type="mdi" :path="manageRe"></svg-icon> ข้อมูลการคืน</v-list-item>
+          </router-link>
+          <router-link   v-show="user" :to="`/dashboard/category`"> 
+             <v-list-item  title="AdminCategory"><svg-icon class="mr-1" type="mdi" :path="manageCa"></svg-icon> ข้อมูลหมวดหมู่</v-list-item>
+          </router-link>
+          
       </div>
     </div>
       <!-- <v-list-item title="Regis"  href="/regis/" >logout</v-list-item> -->
@@ -107,8 +108,8 @@
 
 <script>
 import SvgIcon from '@jamescoyle/vue-icon';
-import { mdiLogoutVariant,mdiAccount,mdiViewDashboardOutline,mdiBriefcaseArrowUpDownOutline ,mdiAccountEdit,
-  mdiHomeCircleOutline 
+import { mdiLogoutVariant,mdiAccount,mdiViewDashboard ,mdiBriefcaseArrowUpDownOutline ,mdiAccountEdit,
+  mdiHomeCircleOutline ,mdiBriefcaseVariant ,mdiBriefcasePlus ,mdiBriefcaseDownload ,mdiShape ,mdiBriefcaseClock 
         } from '@mdi/js';
 export default {
   
@@ -125,12 +126,18 @@ export default {
       lastname: '',
       u_stat: '',
     },
-    dashboard: mdiViewDashboardOutline,
+    dashboard: mdiViewDashboard ,
     path: mdiLogoutVariant,
     path2: mdiAccount,
     path3: mdiBriefcaseArrowUpDownOutline ,
     path4: mdiAccountEdit,
     path5: mdiHomeCircleOutline,
+    manageUser: mdiAccount,
+    manageWa: mdiBriefcaseClock ,
+    manageEq: mdiBriefcaseVariant ,
+    manageBr: mdiBriefcasePlus ,
+    manageRe: mdiBriefcaseDownload ,
+    manageCa: mdiShape ,
       drawer: true,
       bar: false,
   }),
