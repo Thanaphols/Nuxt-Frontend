@@ -15,7 +15,7 @@
         <svg-icon type="mdi" :path="path5"></svg-icon>
       
       </router-link>
-        <v-btn  v-show="user" class="mr-2" plain  @click="logout()"><span class="material-icons"><svg-icon type="mdi" :path="path"></svg-icon></span> </v-btn>
+        <v-btn  v-show="user" class="mr-2" plain  @click="logout()">ออกจากระบบ<span class="material-icons"><svg-icon type="mdi" :path="path"></svg-icon></span> </v-btn>
         <!-- <router-link  v-show="!user" :to="`/auth/`"><span class="material-icons"><svg-icon type="mdi" :path="path2"></svg-icon></span> </router-link> -->
         <v-checkbox 
       v-model="$vuetify.theme.dark"
@@ -30,12 +30,12 @@
     <v-navigation-drawer v-model="drawer"   app     >
       <router-link  v-show="!user" :to="`/auth/`">
       <v-list-item  v-show="!user"    title="Login" >
-          <svg-icon type="mdi" class="mb-0" :path="path2"> </svg-icon> <span class="ml-2">Login</span>
+          <svg-icon type="mdi" class="mb-0" :path="path2"> </svg-icon> <span class="ml-2">เข้าสู่ระบบ</span>
       </v-list-item>
     </router-link>
       <router-link  v-show="!user" :to="`/auth/Regis/`">
       <v-list-item title="Regis"   >
-        <span >Regis</span> 
+        <span >สมัครใช้งาน</span> 
       </v-list-item>
     </router-link>
 
