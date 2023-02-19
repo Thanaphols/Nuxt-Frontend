@@ -11,29 +11,29 @@
           {{errorMessage}}
       </v-alert> 
   
-      <v-card-title class="text-center">Profile</v-card-title>
+      <v-card-title class="justify-center">โปรไฟล์</v-card-title>
       
       <v-card-text>
   
         <form  @submit.prevent="upUser()" >
           
-          <v-text-field  v-model="data.email"  type="email" :counter="50" label="Email" 
+          <v-text-field  v-model="data.email"  type="email" :counter="50" label="อีเมล" 
             > </v-text-field>
 
             <v-text-field  v-model="data.username"  :counter="50" label="Username" 
             > </v-text-field>
-            <v-text-field  v-model="data.firstname"  :counter="50" label="Firstname" 
+            <v-text-field  v-model="data.firstname"  :counter="50" label="ชื่อจริง" 
             > </v-text-field>
   
-            <v-text-field  v-model="data.lastname"  :counter="50" label="Lastname" > 
+            <v-text-field  v-model="data.lastname"  :counter="50" label="นามสกุล" > 
             </v-text-field>
   
-            <v-text-field  v-model="data.password" type="password"  :counter="8"  label="Password" 
+            <v-text-field  v-model="data.password" type="password"  :counter="8"  label="รหัสผ่าน" 
             > </v-text-field>
             <v-card-actions  >
               
-        <v-btn  type="submit"  >
-            submit
+        <v-btn class="primary" type="submit"  >
+            ยืนยัน
         </v-btn>
       </v-card-actions>
           </form>

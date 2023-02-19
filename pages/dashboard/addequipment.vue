@@ -8,11 +8,11 @@
       >
   
       <!-- Alert Success -->
-      <v-alert v-show="showAlert"  dense outlined   type="success">
+      <v-alert v-show="showAlert"  dense  text   type="success">
           {{loginMessage}}
       </v-alert> 
       <!-- Error Success -->
-      <v-alert v-show="errorAlert"  dense outlined  type="error">
+      <v-alert v-show="errorAlert"  dense text outlined type="error">
           {{errorMessage}}
       </v-alert>
   
@@ -106,7 +106,7 @@
     async  addEquipment() {
       if(this.files != null) {
       try {
-        console.log(222)
+        
             const formData = new FormData()
               formData.append('file', this.files[0])
               formData.append('i_name', this.equipment.i_name)
@@ -117,8 +117,8 @@
               this.errorAlert = false
               this.showAlert = true
               this.loginMessage =  this.data.message;
+              console.log(this.data)
           } catch (error) {
-          
           console.error(error);
             this.showAlert = false;
             this.errorAlert = true
@@ -126,8 +126,6 @@
             }
           }else{
             try {
-             
-            console.log(111)
               const res =  await this.$axios.post(`/inv/addInv/`,{
               i_name : this.equipment.i_name,
               i_qty : this.equipment.i_qty,
@@ -136,8 +134,6 @@
               this.data = res.data
               this.errorAlert = false
               this.showAlert = true
-            
-              console.log(this.data);
               this.loginMessage =  this.data.message;
           } catch (error) {
           

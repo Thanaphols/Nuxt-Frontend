@@ -9,25 +9,23 @@
         {{errorMessage}}
     </v-alert> 
 
-    <v-card-title class="text-center">Login</v-card-title>
+    <v-card-title class="justify-center" sm12 xs12>เข้าสู่ระบบ</v-card-title>
     
     <v-card-text>
 
       <form  @submit.prevent="logIn" >
 
-        <v-text-field  v-model="user.email"  type="email" :counter="50" label="Email" 
-          > </v-text-field>
+        <v-text-field  v-model="user.email"   type="email" :counter="50" label="อีเมล"  > </v-text-field>
 
-          <v-text-field  v-model="user.password" type="password"  :counter="8"  label="Password" 
-          > </v-text-field>
+          <v-text-field  v-model="user.password" type="password"  :counter="8"  label="รหัสผ่าน"  > </v-text-field>
 
           <v-card-actions  >
             
-      <v-btn  type="submit"  >
-          submit
+      <v-btn class="primary"  type="submit"  >
+          ยืนยัน
       </v-btn>
-      <v-btn @click="resetForm()">
-          clear
+      <v-btn class="primary" @click="resetForm()">
+          ล้างข้อมูล
       </v-btn>
     </v-card-actions>
         </form>

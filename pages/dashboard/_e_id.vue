@@ -137,6 +137,7 @@
               this.errorAlert = false
               this.showAlert = true
               this.loginMessage =  this.data;
+              this.getInv()
           } catch (error) {
           
           console.error(error);

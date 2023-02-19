@@ -197,7 +197,6 @@
     </v-layout>
   </v-container>
 </div>
-
 </template>
 
 <script>

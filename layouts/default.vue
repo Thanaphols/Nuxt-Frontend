@@ -23,7 +23,7 @@
       color="indigo"
       off-icon="mdi-theme-light-dark"
       on-icon="mdi-theme-light-dark"
-  ></v-checkbox>
+        ></v-checkbox>
      
     </v-app-bar>
  
@@ -41,18 +41,18 @@
 
     <div v-if="$auth.loggedIn" >
         <div  v-if="user.u_stat === 'Approved' || user.u_stat === 'Admin' " >
-          <router-link   v-show="user" :to="`/auth/dashboard`"> 
-            <v-list-item  title="AdminDashboard"><svg-icon type="mdi" :path="path3"></svg-icon> ยืม-คืน</v-list-item>
+          <router-link   v-show="user" :to="`/borrow/`"> 
+            <v-list-item  title="AdminDashboard"><svg-icon class="mr-1" type="mdi" :path="path3"></svg-icon> ยืม-คืน</v-list-item>
           </router-link>
         </div>
     </div>
       
     <router-link  v-show="user" :to="`/auth/profile/`">
-      <v-list-item title="Profile" ><svg-icon type="mdi" :path="path4"></svg-icon> โปรไฟล์</v-list-item>
+      <v-list-item title="Profile"><svg-icon class="mr-1" type="mdi" :path="path4"></svg-icon>โปรไฟล์</v-list-item>
     </router-link>
-    <router-link   v-show="user" :to="`/borrow/`">
+    <!-- <router-link   v-show="user" :to="`/borrow/`">
       <v-list-item title="Borrow"  href="/borrow/" >ยืมอุปกรณ์</v-list-item>
-    </router-link>
+    </router-link> -->
 
     <!-- <router-link   v-show="user" :to="`/borrow/meWait`">
       <v-list-item title="meWait" >คำร้องขอยืม</v-list-item>
@@ -72,25 +72,25 @@
       <div v-if="$auth.loggedIn" >
         <div  v-if="user.u_stat === 'Admin'" >
           <router-link   v-show="user" :to="`/dashboard/`"> 
-            <v-list-item  title="AdminDashboard"><svg-icon type="mdi" :path="path3"></svg-icon> Dashboard</v-list-item>
+            <v-list-item  title="AdminDashboard"><svg-icon class="mr-1" type="mdi" :path="dashboard"></svg-icon> Dashboard</v-list-item>
           </router-link>
           <router-link   v-show="user" :to="`/dashboard/user`">
-            <v-list-item  title="AdminUser">ข้อมูลผู้ใช้งาน</v-list-item>
+            <v-list-item  title="AdminUser"><svg-icon class="mr-1" type="mdi" :path="dashboard"></svg-icon> ข้อมูลผู้ใช้งาน</v-list-item>
           </router-link>
           <router-link   v-show="user" :to="`/dashboard/equipment`"> 
-            <v-list-item  title="AdminEquipment">ข้อมูลอุปกรณ์</v-list-item>
+            <v-list-item  title="AdminEquipment"><svg-icon class="mr-1" type="mdi" :path="dashboard"></svg-icon> ข้อมูลอุปกรณ์</v-list-item>
           </router-link>
           <router-link   v-show="user" :to="`/dashboard/borrow`"> 
-            <v-list-item  title="AdminBorrow">AdminBorrow</v-list-item>
+            <v-list-item  title="AdminBorrow"><svg-icon class="mr-1" type="mdi" :path="dashboard"></svg-icon> ข้อมูลการยืม</v-list-item>
           </router-link>
           <router-link   v-show="user" :to="`/dashboard/return`"> 
-            <v-list-item  title="AdminReturn">AdminReturn</v-list-item>
+            <v-list-item  title="AdminReturn"><svg-icon class="mr-1" type="mdi" :path="dashboard"></svg-icon> ข้อมูลการคืน</v-list-item>
           </router-link>
           <router-link   v-show="user" :to="`/dashboard/category`"> 
-             <v-list-item  title="AdminCategory">AdminCategory</v-list-item>
+             <v-list-item  title="AdminCategory"><svg-icon class="mr-1" type="mdi" :path="dashboard"></svg-icon> ข้อมูลหมวดหมู่</v-list-item>
           </router-link>
           <router-link   v-show="user" :to="`/dashboard/appBorrow`"> 
-             <v-list-item  title="AdminCategory">AdminAppBorrow</v-list-item>
+             <v-list-item  title="AdminCategory"><svg-icon class="mr-1" type="mdi" :path="dashboard"></svg-icon>ข้อมูลคำร้องขอยืม</v-list-item>
           </router-link>
       </div>
     </div>
@@ -107,7 +107,7 @@
 
 <script>
 import SvgIcon from '@jamescoyle/vue-icon';
-import { mdiLogoutVariant,mdiAccount,mdiViewDashboardOutline,mdiAccountEdit,
+import { mdiLogoutVariant,mdiAccount,mdiViewDashboardOutline,mdiBriefcaseArrowUpDownOutline ,mdiAccountEdit,
   mdiHomeCircleOutline 
         } from '@mdi/js';
 export default {
@@ -125,9 +125,10 @@ export default {
       lastname: '',
       u_stat: '',
     },
+    dashboard: mdiViewDashboardOutline,
     path: mdiLogoutVariant,
     path2: mdiAccount,
-    path3: mdiViewDashboardOutline,
+    path3: mdiBriefcaseArrowUpDownOutline ,
     path4: mdiAccountEdit,
     path5: mdiHomeCircleOutline,
       drawer: true,

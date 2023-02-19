@@ -89,8 +89,6 @@
     </v-container> -->
     
     <div class="team">
-        
-    
     <v-container >
         <v-layout row wrap>
             <v-flex col3 md3 sm3 xs4>
@@ -101,16 +99,40 @@
             </v-flex>
         </v-layout>
         
-        <!-- <v-dialog v-model="dialog"> 
-          <v-card>
+        <v-dialog v-model="dialog" width="500px"> 
+          
+          <v-card class="pa-3" >
+            
+
+        <v-alert v-show="showAlert"  dense outlined  type="success">
+      <v-row align="center">
+        {{loginMessage}}
+        <v-spacer/>
+        <v-btn text plain @click="showAlert = !showAlert">X</v-btn>
+      </v-row>
+        
+    </v-alert>
+            
+    <!-- Error Success -->
+    <v-alert v-show="errorAlert"  dense outlined  type="error">
+      <v-row align="center">
+        {{errorMessage}}
+        <v-spacer/>
+        <v-btn text plain @click="errorAlert = !errorAlert">X</v-btn>
+      </v-row>
+        
+    </v-alert>
+            <v-card-title class="text-center"  >
+              
+          <h2> ยื่นคำร้องขอยืมอุปกรณ์ </h2>  <v-spacer/> <v-btn text plain @click="dialog = !dialog">X</v-btn>
+
+        </v-card-title>
             <v-card-text>
               <form  @submit.prevent="addBorrow()" >
-      <v-card >
+      
         <v-row >
           <v-col sm="12">
-          <v-card-title class="text-center"  >
-          <h2  >Select Equipment to Borrow</h2>
-        </v-card-title>
+          
         </v-col>
         </v-row>
         
@@ -118,24 +140,24 @@
           <v-row >
            
 
-         
+          <!--autocomplete -->
        <v-col sm="6">
         <v-autocomplete
-        v-model="category" :items="cate" item-value="c_id"  item-text="c_name"   dense  filled label="Category"
+        v-model="category" :items="cate" item-value="c_id"  item-text="c_name"   dense  filled label="หมวดหมู่"
         @change="getEqu(category)" ></v-autocomplete>
        </v-col>
 
        <v-col sm="6" >
         <v-autocomplete
-        v-model="equment" :items="eq" item-value="i_id"  item-text="i_name"   dense  filled label="Equipment"
+        v-model="equment" :items="eq" item-value="i_id"  item-text="i_name"   dense  filled label="อุปกรณ์"
         @change="handleChange" ></v-autocomplete>
        </v-col>
 
        <v-col cols="12" sm="6" >
-          <v-text-field   v-model="i_qty" max="qty"  type="number" label="Quatity" outlined  ></v-text-field>
+          <v-text-field   v-model="i_qty" max="qty"  type="number" label="จำนวน" outlined  ></v-text-field>
         </v-col>
         <v-col cols="12" sm="6" >
-          <v-text-field   v-model="qty" type="number" label="Emaining" outlined disabled ></v-text-field>
+          <v-text-field   v-model="qty" type="number" label="จำนวนคงเหลือ" outlined disabled ></v-text-field>
         </v-col>
        </v-row>
        </v-card-text>
@@ -145,20 +167,20 @@
         </v-col>
         <v-col sm="4">
           <v-card-actions  >
-            <v-btn  type="submit">submit</v-btn>
-            <v-btn @click="resetForm()">
-                clear
+            <v-btn class="primary" type="submit">ยืนยัน</v-btn>
+            <v-btn class="deep-orange lighten-1" @click="resetForm()">
+                ล้างข้อมูล
             </v-btn>
       </v-card-actions>  
         </v-col>
        </v-row>
        
-       </v-card>
-              </form>
+       
+      </form>
             </v-card-text>
           </v-card>
           
-        </v-dialog> -->
+        </v-dialog>
        
       <v-layout row wrap>
          <v-flex sm6 xs12  md6  lg4 >
@@ -352,6 +374,8 @@
     data() {
     return {
       dialog:false,
+      showAlert: false,
+      errorAlert: false,
         data:[],
         borrow:[],
         returns:[],
@@ -370,12 +394,15 @@
         u_stat: '',
         },
         search: '',
-      n1: 0,
-      n2: 0,
-      n3: 0,
-      team: [
-        
-    ]
+        n1: 0,
+        n2: 0,
+        n3: 0,
+        equment:'',
+        category: '',
+        qty:'',
+        i_qty:'',
+        eq: [],
+        cate:[],
 
         };
     },
@@ -438,6 +465,7 @@
     this.getwa()
     this.getbor()
     this.getre()
+    this.getCate()
     },
     methods: {
         filterOnlyCapsText (value, search, item) {
@@ -526,8 +554,82 @@
             console.error(e);
             }
     },
-    
+
+    async addBorrow() {
+        await this.$axios.post(`/borrow/addBorrow`,{
+        u_id: this.user.u_id,
+        u_stat: this.user.u_stat,
+        i_id: this.equment,
+        c_id: this.category,
+        i_qty: this.i_qty,
+        // จำนวนคงเหลือ qty
+        qty: this.qty,
+        
+      })
+      .then((response) => {
+        this.errorAlert = false
+        this.showAlert = true
+        // eslint-disable-next-line no-console
+        // console.log(response);
+         this.loginMessage =  response.data.message;
+         this.getwa()
+      })
+      .catch((error)=> {
+        // eslint-disable-next-line no-console
+        console.error(error);
+        this.showAlert = false
+        this.errorAlert = true
+        this.errorMessage =  error.response.data.message;
+       
+      })
+     
+    },
+    async getEqu(id) {
+    try {
+      console.log(111)
+      const res = await this.$axios.get(`/inv/cate/${id}`);
+      this.eq = res.data;
+      // eslint-disable-next-line no-console
+      console.log(this.eq);
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(e);
+
+    }
   },
+  async getCate() {
+    try {
+      const res = await this.$axios.get(`/cate`);
+      this.cate = res.data;
+      // eslint-disable-next-line no-console
+      // console.log(this.cate);
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(e);
+
+    }
+  },
+  handleChange(id) {
+       // eslint-disable-next-line camelcase, no-console
+      //  console.log(`Selected: ${id}`)
+      this.eq.forEach((val) => {
+        if (val.i_id === id) {
+          // eslint-disable-next-line no-console
+          console.log(val)
+          this.qty = val.i_qty
+        }
+      })
+      // Perform action based on selected value
+       },
+       resetForm(){
+        this.showAlert = false
+        this.errorAlert = false
+              this.i_qty="";
+              this.qty="";
+              this.category="";
+              this.equment="";
+    },
+}
   }
   
   </script>
