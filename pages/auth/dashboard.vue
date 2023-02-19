@@ -622,8 +622,8 @@
       // Perform action based on selected value
        },
        resetForm(){
-        this.showAlert = false
-        this.errorAlert = false
+              this.showAlert = false
+              this.errorAlert = false
               this.i_qty="";
               this.qty="";
               this.category="";
