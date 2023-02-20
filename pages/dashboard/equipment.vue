@@ -1,8 +1,8 @@
 <!-- eslint-disable vue/valid-v-slot -->
 <template>
     
-    <v-row class="justify-center mt-1">
-      <v-col cols="12" sm="12"  md="12" >
+    <v-layout row class="justify-center mt-1">
+      <v-flex cols="12" sm="12"  md="12" >
     <v-data-table :headers="headers" :items="data"  class="elevation-1 center" :search="search" :custom-filter="filterOnlyCapsText" >
       
       <template #top>
@@ -12,7 +12,7 @@
             </v-flex>
             <v-flex col4 md6 sm12 xs12>
                 <v-btn  plain text   >
-                จำนวนผู้ใช้งานทั้งหมด 
+                จำนวนอุปกรณ์ทั้งหมด
                 {{numall}}
                 </v-btn>
                 
@@ -61,7 +61,7 @@
       </v-icon>
         </v-btn>
     </router-link>
-        <v-btn icon  outlined  class="mr-1 primary error"  @click="deInv(item.i_id)">
+        <v-btn icon  outlined  class="mr-1 primary error"  @click="dedialog = !dedialog;openDe(item.i_id)">
             <v-icon >
         mdi-delete
       </v-icon>
@@ -71,8 +71,55 @@
 
       
     </v-data-table>
-    </v-col>
-    </v-row>
+    </v-flex>
+
+    <v-dialog
+      v-model="dedialog"
+      max-width="380"
+    >
+      <v-card align="center">
+       
+                
+        <!-- Error Success -->
+        <v-alert v-show="deerrorAlert"  dense outlined  type="error">
+          <v-row align="center">
+            ไม่สามารถลบรายการคืนนี้ได้
+            <v-spacer/>
+            <v-btn text plain @click="deerrorAlert = false">X</v-btn>
+          </v-row>
+            
+        </v-alert>
+        <v-card-title   class="text-h5">
+         
+          ยืนยันที่จะลบรายการคืนนี้หรือไม่
+        </v-card-title>
+
+        <v-card-text>
+         
+        </v-card-text>
+
+        <v-card-actions>
+
+          <v-btn
+            color="green darken-1"
+            text
+            @click="confirmDe(d_id,d_qty,d_id2)"
+          >
+            ยืนยัน
+          </v-btn>
+            <v-spacer></v-spacer>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="dedialog = !dedialog;deerrorAlert = false"
+          >
+            ยกเลิก
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    </v-layout>
     
   </template>
    
@@ -92,6 +139,10 @@
         c_name: '',
        },
        de:[],
+
+       dedialog: false,
+        deerrorAlert: false,
+        d_id: '',
       }
     },
     
@@ -118,14 +169,11 @@
           // console.log(this.desserts)
           this.user = this.$auth.user
            this. u_id = this.user.u_id
-           // eslint-disable-next-line no-console
-          console.log(this.u_id)
           this.getEq()
           this.getcate()
         },
     methods: {
       filterOnlyCapsText (value, search, item) {
-        console.log(value)
         return value != null &&
           search != null &&
           typeof value === 'string' &&
@@ -137,16 +185,15 @@
             try {
             const res = await this.$axios.delete(`/admin/deInv/${id}`);
             this.de = res.data;
-            // eslint-disable-next-line no-console
-            console.log(this.de);
-            setTimeout(async () =>{  
-          await location.reload()
-          //  this.$router.push('/')
-         }, )
+
+            this.dedialog = false
+            this.getEq()
             
             } catch (e) {
             // eslint-disable-next-line no-console
             console.error(e);
+            this.dedialog = true
+            this.deerrorAlert = true
 
             }
         },
@@ -159,7 +206,7 @@
             this.data = res.data;
             this.numall = this.data.length;
             // eslint-disable-next-line no-console
-            console.log(this.data);
+            // console.log(this.data);
             } catch (e) {
             // eslint-disable-next-line no-console
             console.error(e);
@@ -172,12 +219,23 @@
             const res = await this.$axios.get(`/cate/`);
             this.cate = res.data;
             // eslint-disable-next-line no-console
-            console.log(this.cate);
+            // console.log(this.cate);
             } catch (e) {
             // eslint-disable-next-line no-console
             console.error(e);
 
             }
+        },
+
+        openDe(id){
+          this.dedialog = true
+          this.d_id = id
+          // console.log(id,qty,id2)
+        },
+
+        confirmDe(id){
+          // console.log()
+        this.deInv(id)
         },
 
     },

@@ -109,9 +109,9 @@
                         <div><v-divider></v-divider></div>
                       </v-list-item-content> 
                     </v-list-item>
-                   <v-card-action>
+                   <v-card-actions>
                     
-                   </v-card-action>
+                   </v-card-actions>
                   </v-card>
         </v-flex>
         <v-flex  class="pa-2" col4 md4 sm4 xs12 outlined tile >
@@ -139,9 +139,9 @@
                         <div><v-divider></v-divider></div>
                       </v-list-item-content> 
                     </v-list-item>
-                   <v-card-action>
+                   <v-card-actions>
                     
-                   </v-card-action>
+                   </v-card-actions>
                   </v-card>
         </v-flex>
     </v-layout>

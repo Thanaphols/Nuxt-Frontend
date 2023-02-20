@@ -5,8 +5,8 @@
           <v-flex col3 md3 sm3 xs4>
               <h1 class="subheading " dark>ยืม-คืน</h1>
           </v-flex>
-          <v-flex col3 md3 sm3 xs4>
-              <v-btn @click="dialog= !dialog"  dark>เพิ่ม</v-btn>
+          <v-flex col4 md4 sm4 xs4>
+              <v-btn  class="indigo lighten-1" dark @click="dialog= !dialog"   >เพิ่ม</v-btn>
           </v-flex>
       </v-layout>
       
@@ -35,7 +35,7 @@
   </v-alert>
           <v-card-title class="text-center"  >
             
-        <h2> ยื่นคำร้องขอยืมอุปกรณ์ </h2>  <v-spacer/> <v-btn text plain @click="dialog = !dialog">X</v-btn>
+        <h2> ยื่นคำร้องขอยืมอุปกรณ์ </h2>  <v-spacer/> <v-btn text plain @click="dialog = !dialog;showAlert = false;errorAlert=false">X</v-btn>
 
       </v-card-title>
           <v-card-text>
@@ -314,7 +314,8 @@ export default {
       i_qty:'',
       eq: [],
       cate:[],
-
+      errorMessage: '',
+      loginMessage:'',
       };
   },
   computed:{

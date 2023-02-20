@@ -2,8 +2,8 @@
 
 <template>
     
-    <v-row class="justify-center mt-1">
-      <v-col cols="12" sm="12"  md="12" >
+    <v-layout row class="justify-center mt-1">
+      <v-flex cols="12" sm="12"  md="12" >
     <v-data-table :headers="headers" :items="data"  class="elevation-1 center" :search="search" :custom-filter="filterOnlyCapsText" >
    
       <template #top>
@@ -32,10 +32,13 @@
     ></v-img>
         
     </template>
-      
+    <template #item.b_dates="{ item }">
+          <span>{{ new Date(item.b_return).toLocaleString('th-TH', { year:'numeric', month:'long',day:'numeric'
+           , timeZone: 'UTC' }) }}</span>
+    </template>
       <template #item.actions="{ item }">
        
-        <v-btn icon  outlined  class="mr-1 teal error"  @click="deBorrow(item.b_id,item.b_qty,item.i_id)">
+        <v-btn icon  outlined  class="mr-1 teal error"  @click="dedialog = !dedialog ;opendeRe(item.b_id)">
             <v-icon >
         mdi-delete
       </v-icon>
@@ -46,9 +49,55 @@
 
       
     </v-data-table>
-    </v-col>
-    </v-row>
-    
+    </v-flex>
+
+    <v-dialog
+      v-model="dedialog"
+      max-width="470"
+    >
+      <v-card align="center">
+       
+                
+        <!-- Error Success -->
+        
+        <v-card-title   class="text-h5">
+          <v-alert v-show="deerrorAlert"  dense outlined  type="error">
+          <v-row align="center">
+            ไม่สามารถลบรายการคืนนี้ได้
+            <v-spacer/>
+            <v-btn text plain @click="deerrorAlert = false">X</v-btn>
+          </v-row>
+            
+        </v-alert>
+          ยืนยันที่จะลบรายการคืนนี้หรือไม่
+        </v-card-title>
+
+        <v-card-text>
+         
+        </v-card-text>
+
+        <v-card-actions>
+
+          <v-btn
+            color="green darken-1"
+            text
+            @click="confirmdeRe(de_id)"
+          >
+            ยืนยัน
+          </v-btn>
+            <v-spacer></v-spacer>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="dedialog = !dedialog;deerrorAlert = false"
+          >
+            ยกเลิก
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    </v-layout>
   </template>
    
   
@@ -71,7 +120,9 @@
         user:[],
         search: '',
         b_id: '',
-       
+        de_id: '',
+        deerrorAlert: false,
+        dedialog : false,
       }
     },
     
@@ -80,18 +131,18 @@
       headers () {
         return [
           
-        { text: 'Borrow (id)', value: 'b_id', filter: value => {
+        { text: 'ไอดีการคืน', value: 'b_id', filter: value => {
               if (!this.b_id) return true
               return value < parseInt(this.b_id)
             }, },
           { text: 'UserName', value: 'username' },
-          { text: 'Inventory Name', value: 'i_name'  },
-          { text: 'Equipment Images', value: 'img'   },
-          { text: 'Category', value: 'c_name' },
-          { text: 'Quetity', value: 'b_qty', sortable: false },
-          { text: 'Borrow Date', value: 'b_date', sortable: false },
-          { text: 'Borrow Status', value: 'b_stat', sortable: false },
-          { text: 'Actions', value: 'actions', sortable: false },
+          { text: 'ชื่ออุปกรณ์', value: 'i_name'  },
+          { text: 'รูปภาพ', value: 'img'   },
+          { text: 'หมวดหมู่', value: 'c_name' },
+          { text: 'จำนวน', value: 'b_qty', sortable: false },
+          { text: 'วันที่คืน', value: 'b_dates', sortable: false },
+          { text: 'สถานะ', value: 'b_stat', sortable: false },
+          { text: 'จัดการ', value: 'actions', sortable: false },
           
         ]
       },
@@ -104,8 +155,6 @@
           // console.log(this.desserts)
           this.user = this.$auth.user
            this. u_id = this.user.u_id
-           // eslint-disable-next-line no-console
-          console.log(this.u_id)
           this.getmeReturn()
         },
     methods: {
@@ -116,52 +165,42 @@
           value.toString().toLocaleUpperCase().includes(search)
       },
 
-      async deBorrow(id,qty,id2) {
+      async deReturn(id) {
         
             try {
-           const res = await this.$axios.delete(`/borrow/deBorrow/${id}/${qty}/${id2}`);
+           const res = await this.$axios.delete(`/borrow/dereturn/${id}`);
            this.de = res.data
-            // eslint-disable-next-line no-console
-            setTimeout(async () =>{  
-          await location.reload()
-          //  this.$router.push('/')
-         },)
+           this.dedialog = false
+            this.getmeReturn()
             } catch (e) {
-            // eslint-disable-next-line no-console
+
             console.error(e);
 
             }
         },
-
-        async upBorrow(id,qty,id2) {
-        
-        try {
-        await this.$axios.delete(`/borrow/deBorrow/${id}/${qty}/${id2}`);
-        // eslint-disable-next-line no-console
-        this.$router.go()
-        } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
-
-        }
-    },
-
-    
-    
-        
-
       async getmeReturn() {
             try {
             const res = await this.$axios.get(`/return/`);
             this.data = res.data;
             // eslint-disable-next-line no-console
-            console.log(this.data);
+            // console.log(this.data);
             } catch (e) {
             // eslint-disable-next-line no-console
             console.error(e);
 
             }
         },
+
+        opendeRe(id){
+          this.dedialog = true
+          this.de_id = id
+        },
+
+        confirmdeRe(id){
+          // console.log(id)
+         this.deReturn(id)
+        },
+
     },
   }
   </script>
